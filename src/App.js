@@ -10,6 +10,7 @@ import WritePage from "./pages/WritePage";
 import LoginPage from "./pages/LoginPage";
 import MemberInfoPage from "./pages/MemberInfoPage";
 import MyWritePage from "./pages/MyWritePage";
+import MyCommentPage from "./pages/MyCommentPage";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -27,6 +28,7 @@ function App() {
           <Route path='/write' element={<WritePage/>}/>
           <Route path='/memberinfo' element={<MemberInfoPage/>}/>
           <Route path='/mywrite' element={<MyWritePage/>}/>
+          <Route path='/mycomment' element={<MyCommentPage/>}/>
         </Routes>
         {/* <Footer/> */}
       </Router>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../resource/sleep_kirby.gif";
 import api from "../api/api";
+import { isLogin } from "../util/common";
 
 const Login = () =>{
   const [inputNickname, setInputNickname] = useState('');
@@ -53,7 +54,11 @@ const Login = () =>{
       console.log(e);
     }
   }
-  
+
+  if(isLogin){
+    window.location.replace("/main");
+  }
+
   return(
     <>
     <Link to="/main"> 메인페이지 </Link>
