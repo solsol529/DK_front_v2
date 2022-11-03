@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import defaultProfileImg from "../resource/kriby_study2.png";
 import rankIcon1 from "../resource/kirby_icon1.png";
+import { logout } from "../util/common";
 
 const ProfileCard = ()=>{
   return(
@@ -15,7 +16,7 @@ const ProfileCard = ()=>{
           회원등급
         </Link>
       </p>
-      <p><Link to="/memberinfo">내 정보</Link><Link to="#">로그아웃</Link></p>
+      <p><Link to="/memberinfo">내 정보</Link><Link to="#" onClick={logout}>로그아웃</Link></p>
     </div>
   );
 };

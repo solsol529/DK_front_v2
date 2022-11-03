@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../resource/sleep_kirby.gif";
 import api from "../api/api";
+import { isLogin } from "../util/common";
 
 const Login = () =>{
   const [inputNickname, setInputNickname] = useState('');
@@ -13,14 +14,7 @@ const Login = () =>{
   const [isNickname, setIsNickname] = useState('');
   const [isPwd, setIsPwd] = useState('');
 
-  const [buttonOn, setButtonOn] = useState(false);
-
-  const buttonOnOff = ()=>{
-    if(isNickname&&isPwd){
-      setButtonOn(true);
-    }
-    else setButtonOn(false);
-  };
+  const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
 
   const onChangeNickname = (e) =>{
     setInputNickname(e.target.value);
@@ -31,20 +25,17 @@ const Login = () =>{
     } else{
       setIsNickname(true);
     }
-    buttonOnOff();
   };
 
-  // 임시 - 강사님 코드
   const onChangePwd = (e) => {
-    const password = e.target.value ;
-    setInputPwd(password);
-    if (password.length < 8) {
-      setPwdMsg("비밀번호를 8자리 이상 입력해주세요!");
-      setIsPwd(false);
-    } else {
+    setInputPwd(e.target.value);
+    const pwd = e.target.value ;
+    if(pwdRegEx.test(pwd)){
       setIsPwd(true);
+    } else {
+      setPwdMsg("비밀번호 형식을 확인해주세요!");
+      setIsPwd(false);
     }
-    buttonOnOff();
   }
 
   const onClickLogin = async() => {
@@ -52,10 +43,8 @@ const Login = () =>{
       // 로그인을 위한 axios 호출
       const res = await api.userLogin(inputNickname, inputPwd);
       console.log(res.data.result);
-      
       if(res.data.result === "OK") {
-        window.localStorage.setItem("userNickname", inputNickname);
-        window.localStorage.setItem("userPwd", inputPwd);
+        window.localStorage.setItem("memberNum", res.data.memberNum);
         window.location.replace("/main");
       } else {
 
@@ -65,7 +54,11 @@ const Login = () =>{
       console.log(e);
     }
   }
-  
+
+  if(isLogin){
+    window.location.replace("/main");
+  }
+
   return(
     <>
     <Link to="/main"> 메인페이지 </Link>
@@ -85,8 +78,8 @@ const Login = () =>{
         {/* <label htmlFor="pwd">비밀번호</label> */}
         <input type="password" name="pwd" value={inputPwd} onChange={onChangePwd} placeholder="비밀번호"></input>
         {!isPwd && <span className="err">{pwdMsg}</span>}
-        {!buttonOn && <button className="regchkbtnf">로그인</button>}
-        {buttonOn && <button className="regchkbtnt" onClick={onClickLogin}>로그인</button>}
+        {!(isNickname && isPwd) && <button className="regchkbtnf">로그인</button>}
+        {(isNickname && isPwd) && <button className="regchkbtnt" onClick={onClickLogin}>로그인</button>}
       </div>
       <p><span>개발하는 커비가 처음이신가요?</span><Link to="/jointerm">회원가입</Link></p>
     </div>
