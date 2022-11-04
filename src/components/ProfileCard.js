@@ -9,17 +9,17 @@ const ProfileCard = ()=>{
 
   const [lists, setLists] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.boardInfoDetail();
-        setLists(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await api.boardInfoDetail();
+  //       setLists(response.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return(
     <div className="profilecard">

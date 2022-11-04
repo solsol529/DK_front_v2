@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { storage } from "../api/firebase"
+import { Link } from "react-router-dom";
 
 const ChangeMemberInfo = () =>{
   const [changeProfileImg, setChangeProfileImg] = useState(false);
@@ -78,10 +79,8 @@ const ChangeMemberInfo = () =>{
         )}
         </div>
       }
-      <p>비밀번호 변경</p>
-      {changePwd && <div></div>}
-      <p>이메일 변경</p>
-      {changeEmail && <div></div>}
+      <p><Link to="/PwdChange" className="logout">비밀번호 변경</Link></p>
+      <p><Link to="/EmailChange" className="logout">이메일 변경</Link></p>
     </div>
   );
 };

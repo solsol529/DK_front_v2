@@ -17,5 +17,40 @@ const api = {
     }
     return await axios.post(BASE_URL + "ProfileSelectServlet", regCmd, HEADER);
   },
+  //회원정보 조회
+  memberInfo: async function(nickname) {
+    const regCmd = {
+        cmd : "MemberInfo",
+        nickname : nickname
+    }
+    return await axios.post(BASE_URL + "MemberServlet", regCmd, HEADER);
+  },
+  //회원탈퇴
+  memberDelete: async function(pwd) {
+    const regCheck = {
+    pwd: pwd
+    }
+    return await axios.post(BASE_URL + "MemberDeleteServlet", regCheck, HEADER);
+  },
+
+  //회원정보수정
+  memberUpdate: async function(value, type, nickname) {
+    const updateObj = {
+      value : value,
+      type : type, 
+      nickname : nickname
+    }
+    return await axios.post(BASE_URL + "MemberUpdateServlet", updateObj, HEADER);
+  },
+
+  //나의 작성 글
+  myWriteSearch: async function(nickname) {
+    const regCmd = {
+      cmd : "Write",
+      nickname : nickname
+  }
+  return await axios.post(BASE_URL + "MyWriteSearchServlet", regCmd, HEADER);
+  },
+  
 };
 export default api;

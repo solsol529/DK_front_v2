@@ -7,7 +7,7 @@ import BoardName from "./BoardName";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 
-const MemberInfoMyWrite = () =>{
+const MemberInfoMyComment = () =>{
   const [memberInfo, setMemberInfo] = useState('');
   const getNickname = window.localStorage.getItem("userNickname");
 
@@ -28,25 +28,25 @@ const MemberInfoMyWrite = () =>{
       <div className="memberinfoheader">
         <div className="profilecard">
           <div className="profileimg">
-            <img src={defaultProfileImg} alt="ê¸°ë³¸ í”„ë¡œí•„ ì´ë¯¸ì§€(ê³µë¶€í•˜ëŠ” ì»¤ë¹„)"/>
+            <img src={defaultProfileImg} alt="±âº» ÇÁ·ÎÇÊ ÀÌ¹ÌÁö(°øºÎÇÏ´Â Ä¿ºñ)"/>
           </div>
           <div className="profileinfo">
           {memberInfo && memberInfo.map(member => (
                     <div key={member.nickname}>
-                        <p>íšŒì›ë²ˆí˜¸ : {member.member_num}</p>
-                        <p>ë‹‰ë„¤ì„ : {member.nickname}</p>
-                        <p>ê°€ì…ì¼ : {member.join}</p>
-                        <p>ì „í™”ë²ˆí˜¸ : {member.phone}</p>
-                        <p>ì´ë©”ì¼ : {member.email}</p>
-                        <p>íšŒì›ë“±ê¸‰ : {member.grade}</p>
+                        <p>È¸¿ø¹øÈ£ : {member.member_num}</p>
+                        <p>´Ğ³×ÀÓ : {member.nickname}</p>
+                        <p>°¡ÀÔÀÏ : {member.join}</p>
+                        <p>ÀüÈ­¹øÈ£ : {member.phone}</p>
+                        <p>ÀÌ¸ŞÀÏ : {member.email}</p>
+                        <p>È¸¿øµî±Ş : {member.grade}</p>
                     </div>
           ))}
           </div>
-          <Link to="/login" className="logout">ë¡œê·¸ì•„ì›ƒ</Link>
+          <Link to="/login" className="logout">·Î±×¾Æ¿ô</Link>
         </div>
       </div>
       <div className="memberinfocenter">
-        <BoardName name="ë‚˜ì˜ ì‘ì„± ê¸€"/>
+        <BoardName name="³ªÀÇ ´ñ±Û ÀÛ¼º±Û"/>
         <div className="mywriteview">
           <Write/>
         </div>
@@ -55,4 +55,4 @@ const MemberInfoMyWrite = () =>{
   );
 
 };
-export default MemberInfoMyWrite;
+export default MemberInfoMyComment;

@@ -45,6 +45,7 @@ const Login = () =>{
       console.log(res.data.result);
       if(res.data.result === "OK") {
         window.localStorage.setItem("memberNum", res.data.memberNum);
+        window.localStorage.setItem("userNickname", inputNickname);
         window.location.replace("/main");
       } else {
 
