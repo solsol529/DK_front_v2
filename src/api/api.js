@@ -10,6 +10,6 @@ const api = {
       pwd: pwd
     }
     return await axios.post(BASE_URL+ "LoginServlet", loginObj, HEADER);
-  }
+  },
 };
 export default api;
