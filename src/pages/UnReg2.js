@@ -13,18 +13,17 @@ const UnReg2 = () => {
 
     //오류 메시지
     const [pwMessage, setPwMessage] = useState("");
+    const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
 
     //비밀번호 일치 ck
     const onChangepwd = (e) => {
       const passwordCurrent = e.target.value;
       setInputPwd(passwordCurrent)
-      if (passwordCurrent !== userPwd) {
-          setPwMessage('비밀 번호가 일치하지 않습니다.')
-          // setIsPw(false)
+      if(pwdRegEx.test(passwordCurrent)){
+        setPwMessage('비밀 번호가 일치 합니다.')
       } else {
-          setPwMessage('비밀 번호가 일치 합니다.')
-          // setIsPw(true);
-      }      
+        setPwMessage('비밀 번호 형식이 일치하지 않습니다.')
+      } 
     }
 
     // const onChangepwd = (e) => {
@@ -36,11 +35,9 @@ const UnReg2 = () => {
       try {
           const res = await api.userLogin(userNickname, inputPwd);
           console.log(res.data);
-         
           if(res.data.result === "OK") {
             onClickMemberdel2();
-          } else {
-          }           
+          }        
       } catch (e) {
           console.log("로그인 에러..");
       }
@@ -49,7 +46,7 @@ const UnReg2 = () => {
     //회원탈퇴
     const onClickMemberdel2 = async() => {
         try {
-          const res = await api.memberDelete(userPwd);
+          const res = await api.memberDelete();
           console.log(res.data.result);
           
           if(res.data.result === "OK") {

@@ -18,17 +18,11 @@ const api = {
     return await axios.post(BASE_URL + "ProfileSelectServlet", regCmd, HEADER);
   },
   //회원정보 조회
-  memberInfo: async function(nickname) {
-    const regCmd = {
-        cmd : "MemberInfo",
-        nickname : nickname
-    }
-    return await axios.post(BASE_URL + "MemberServlet", regCmd, HEADER);
-  },
+
   //회원탈퇴
-  memberDelete: async function(pwd) {
+  memberDelete: async function() {
     const regCheck = {
-    pwd: pwd
+      target : localStorage.getItem("memberNum")
     }
     return await axios.post(BASE_URL + "MemberDeleteServlet", regCheck, HEADER);
   },
@@ -41,15 +35,6 @@ const api = {
       nickname : nickname
     }
     return await axios.post(BASE_URL + "MemberUpdateServlet", updateObj, HEADER);
-  },
-
-  //나의 작성 글
-  myWriteSearch: async function(nickname) {
-    const regCmd = {
-      cmd : "Write",
-      nickname : nickname
-  }
-  return await axios.post(BASE_URL + "MyWriteSearchServlet", regCmd, HEADER);
   },
   
 };
