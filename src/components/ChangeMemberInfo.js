@@ -59,34 +59,6 @@ const ChangeMemberInfo = () =>{
   //   // Updating the state
   //   setFile({ file: event.target.files[0] });
   // };
-  // const onFileUpload = async () => {
-  //   // Client ID
-  //   const clientId = "75f78fe4bfe22bb",
-  //     auth = "Client-ID " + clientId;
-  
-  //   // Creating an object of formData
-  //   const formData = new FormData();
-  
-  //   // Adding our image to formData
-  //   formData.append("file", file);
-  
-  //   // Making the post request
-  //   await fetch("https://api.imgur.com/3/image", {
-  //     // API Endpoint
-  //     method: "POST", // HTTP Method
-  //     body: formData, // Data to be sent
-  //     headers: {
-  //       // Setting header
-  //       Authorization: auth,
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     // Handling success
-  //     .then((res) => {
-  //       alert("image uploaded") && console.log(res)
-  //     }) 
-  //     .catch((err) => alert("Failed") && console.log(err)); 
-  // };
 
   return(
     <div className="changememberinfo">

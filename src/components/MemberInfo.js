@@ -4,6 +4,7 @@ import defaultProfileImg from "../resource/kriby_study2.png";
 import rankIcon1 from "../resource/kirby_icon1.png";
 import ChangeMemberInfo from "./ChangeMemberInfo";
 import MyWrite from "./MyWrite";
+import { logout } from "../util/common";
 const MemberInfo = () =>{
   return(
     <div className="memberinfomain">
@@ -22,7 +23,7 @@ const MemberInfo = () =>{
           <p>회원번호 /  가입일</p>
           <p>이메일@email.com</p>
           <p>+82 10-1234-5678</p>
-          <button>로그아웃</button>
+          <button><Link to="#" onClick={logout}>로그아웃</Link></button>
         </div>
       </div>
       <div className="memberinfocenter">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../resource/sleep_kirby.gif";
 import "../style/join.scss"
@@ -36,7 +36,6 @@ const Join = ()=>{
   const [isPhonereg, setIsPhonereg] = useState('');
   const [isPhone, setIsPhone] = useState('');
   const [isPhonever, setIsPhonever] = useState('');
-  const [buttonOn, setButtonOn] = useState(false);
 
   // 비밀번호, 비밀번호 확인 자물쇠 배경 위한 useState, white, red, blue 
   const [pwdlock, setPwdlock] = useState('white');
@@ -44,18 +43,11 @@ const Join = ()=>{
 
   // 정규식
   // 패스워드 입력 조건 대문자, 소문자, 특수문자 포함 8자리 이상 20자리 이하
-  const pwdRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{8,20}$/;
+  const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
   // 이메일 - 일반적인 규칙
   const emailRegEx = /^([a-z]+\d*)+(\.?\w+)+@\w+(\.\w{2,3})+$/;
   // 전화번호 - 일반적인 규칙
   const phoneRegEx = /^\d{2,3}-\d{3,4}-\d{4}$/;
-
-  const buttonOnOff = ()=>{
-    if(isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever){
-      setButtonOn(true);
-    }
-    else setButtonOn(false);
-  };
 
   const onChangeNickname = (e) =>{
     // console.log("onChange 이벤트 불러짐");
@@ -75,12 +67,6 @@ const Join = ()=>{
     }
   };
 
-  const onBlurNickname = (e) =>{
-    if(e.target.value.length === 0){
-      setNicknameMsg("닉네임은 필수 항목입니다!");
-    }
-  };
-
   const onClickNickdup = () =>{
     console.log("닉네임 중복체크를 할때 들어온 값" + nickname);
     if((nickname.length !== 0) &&(nickname.length <= 10)){
@@ -95,17 +81,116 @@ const Join = ()=>{
     }
   };
 
-  const onChangePwd = () =>{};
-  const onBlurPwd = () =>{};
-  const onChangePwdchk = () =>{};
-  const onBlurPwdchk = () =>{};
-  const onChangeEmail = () =>{};
-  const onBlurEmail = () =>{};
-  const onChangePhonereg = () =>{};
-  const onChangePhone = () =>{};
-  const onBlurPhone = () =>{};
-  const onChangePhonever = () =>{};
-  const onBlurPhonever = () =>{};
+  const onChangePwd = (e) =>{
+    setPwd(e.target.value);
+    const inputPwd = e.target.value;
+    setIsPwd(false);
+    if(pwdRegEx.test(inputPwd)){
+      setIsPwd(true);
+      setPwdOkMsg("사용 가능한 비밀번호 입니다!");
+    } else if(inputPwd.length === 0){
+      setIsPwd(false);
+      setPwdMsg("비밀번호는 필수 항목입니다!");
+    } else{
+      setIsPwd(false);
+      setPwdMsg("비밀번호는 소문자, 숫자, 특수문자를 최소 1개 포함하고 8자이상 20자 이하 입니다!");
+    }
+  };
+
+  const onChangePwdchk = (e) =>{
+    setPwdchk(e.target.value);
+    const inputPwdchk = e.target.value;
+    setIsPwdchk(false);
+    if(pwd.length === 0){
+      setIsPwdchk(false);
+      setPwdchkMsg("비밀번호 항목을 먼저 확인해주세요!");
+    } else if(inputPwdchk.length === 0){
+      setIsPwdchk(false);
+      setPwdchkMsg("비밀번호 확인은 필수 항목입니다!");
+    } else if(pwdRegEx.test(inputPwdchk) && inputPwdchk === pwd){
+      setIsPwdchk(true);
+      setPwdchkOkMsg("비밀번호 확인이 완료되었습니다!");
+    } else{
+      setIsPwdchk(false);
+      setPwdchkMsg("비밀번호 확인이 비밀번호와 일치하지 않습니다!");
+    }
+  };
+
+  const onChangeEmail = (e) =>{
+    setEmail(e.target.value);
+    const inputEmail = e.target.value;
+    setIsEmail(false);
+    if(emailRegEx.test(inputEmail)){
+      setIsEmail(true);
+      setEmailOkMsg("사용 가능한 이메일 입니다!");
+    } else{
+      setIsEmail(false);
+      setEmailMsg("이메일 형식을 확인해주세요! (필수 항목 아님)");
+    }
+  };
+  const onChangePhonereg = (e) =>{
+    setPhonereg(e.target.value);
+  };
+
+  useEffect(() => {
+    if (phone.length === 11) {
+      setPhone(phone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+    }
+    if(phoneRegEx.test(phone)){
+      setIsPhone(true);
+      setPhoneOkMsg("사용 가능한 전화번호 입니다!");
+    }
+  }, [phone]);
+
+  const onChangePhone = (e) =>{
+    const inputPhone = e.target.value;
+    setPhone(e.target.value);
+    setIsPhone(false);
+    if(phoneRegEx.test(inputPhone)){
+      setIsPhone(true);
+      setPhoneOkMsg("사용 가능한 전화번호 입니다!");
+    } else if (inputPhone.length === 0){
+      setIsPhone(false);
+      setPhoneMsg("전화번호는 필수 항목입니다!");
+    } else {
+      setIsPhone(false);
+      setPhoneMsg("전화번호 형식을 확인해주세요!");
+    }
+  };
+  const onChangePhonever = (e) =>{
+    setPhonever(e.target.value);
+  };
+
+  const onBlurNickname = (e) =>{
+    if(e.target.value.length === 0){
+      setNicknameMsg("닉네임은 필수 항목입니다!");
+    }
+  };
+  const onBlurPwd = (e) =>{
+    if(e.target.value.length === 0){
+      setPwdMsg("비밀번호는 필수 항목입니다!");
+    }
+  };
+  const onBlurPwdchk = (e) =>{
+    if(e.target.value.length === 0){
+      setPwdchkMsg("비밀번호 확인은 필수 항목입니다!");
+    }
+  };
+  const onBlurEmail = (e) =>{
+    if(emailRegEx.test(e.target.value)){
+      setEmailMsg("이메일 형식을 확인해주세요! (필수 항목 아님)");
+    }
+  };
+  const onBlurPhone = (e) =>{
+    if(e.target.value.length === 0){
+      setPhoneMsg("전화번호는 필수 항목입니다!");
+    }
+  };
+  const onBlurPhonever = (e) =>{
+    if(e.target.value.length === 0){
+      setPhoneverMsg("인증번호는 필수 항목입니다!");
+    }
+  };
 
   return(
     <div className="joinmain">
@@ -159,22 +244,22 @@ const Join = ()=>{
           <div className="phonebox">
             <label htmlFor="phone">휴대전화</label>
             <select name="phonereg" id="phonereg" className="phonereg" value={phonereg} onChange={onChangePhonereg}>
-              <option value="+1">미국/캐나다 +1</option>
+              {/* <option value="+1">미국/캐나다 +1</option>
               <option value="+44">영국 +44</option>
               <option value="+61">호주 +61</option>
-              <option value="+81">일본 +81</option>
+              <option value="+81">일본 +81</option> */}
               <option value="+82">대한민국 +82</option>
-              <option value="+852">홍콩 +852</option>
+              {/* <option value="+852">홍콩 +852</option> */}
+              {/* 해외에 인증 문자보내는게 테스트도 어렵고 유료라서 보류 */}
             </select>
 
             <div className="phoneinput">
               <input type="tel" value={phone} name="phone" id="phone" className="phone" 
-              onChange={onChangePhone} onBlur={onBlurPhone} placeholder="전화번호를 입력해 주세요" onkeyup="test(this)"/>
+              onChange={onChangePhone} onBlur={onBlurPhone} placeholder="전화번호를 입력해 주세요"/>
               <button className="phoneverbtn">인증번호 받기</button>
             </div>
             {!isPhone && <span className="err">{phoneMsg}</span>}
             {isPhone && <span className="msg">{phoneOkMsg}</span>}
-
             <div className="phoneverinput">
               <input type="text" value={phonever} name="phonevernum" id="phonevernum" className="phonevernum" 
               onChange={onChangePhonever} onBlur={onBlurPhonever} placeholder="인증번호를 입력해 주세요"/>
@@ -183,8 +268,10 @@ const Join = ()=>{
             {!isPhonever && <span className="err">{phoneverMsg}</span>}
             {isPhonever && <span className="msg">{phoneverOkMsg}</span>}
           </div>
-          {!buttonOn && <button className="regchkbtnf">가입하기</button>}
-          {buttonOn && <button className="regchkbtnt">가입하기</button>}
+          {!(isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever) 
+          && <button className="regchkbtnf">가입하기</button>}
+          { (isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever) 
+          && <button className="regchkbtnt">가입하기</button>}
         </form>
       </div>
     </div>
