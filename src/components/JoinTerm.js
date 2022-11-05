@@ -18,6 +18,10 @@ const JoinTerm = () =>{
     }
   };
 
+  if(!localStorage.getItem("adOK")){
+    window.location.replace("/join");
+  }
+
   // 체크박스 전체 선택
   const handleAllCheck = (checked) => {
     if(checked) {
@@ -41,7 +45,7 @@ const JoinTerm = () =>{
         <Link to="/">개발하는 커비</Link>
       </div>
       <div div className="join">
-        <form action="#" className="joinform">
+        <div action="#" className="joinform">
           <p className="termchkall">
             <span>
             <input type='checkbox' name='select-all'
@@ -299,8 +303,17 @@ const JoinTerm = () =>{
           {!(checkItems.includes("chk1")&&checkItems.includes("chk2"))
           && <button className="regchkbtnf">다음</button>}
           {(checkItems.includes("chk1")&&checkItems.includes("chk2")) 
-          && <button className="regchkbtnt">다음</button>}
-        </form>
+          && <button className="regchkbtnt"
+            onClick={()=>{
+              if (checkItems.includes("chk3")){
+                window.localStorage.setItem("adOk", "OK");
+              } else{
+                window.localStorage.setItem("adOk", "NOK");
+              }
+              window.location.replace("/join");
+              }}
+          >다음</button>}
+        </div>
       </div>
     </div>
   );

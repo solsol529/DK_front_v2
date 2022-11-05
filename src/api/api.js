@@ -11,14 +11,14 @@ const api = {
     }
     return await axios.post(BASE_URL+ "LoginServlet", loginObj, HEADER);
   },
-  profileSelect: async function() {
+  //회원정보 조회
+  memberInfo: async function() {
     const regCmd = {
+      cmd : "MemberInfo", //조회는 이름만 날려주면됨
       target : localStorage.getItem("memberNum") //조회할 대상의 회원번호 날려줌
     }
-    return await axios.post(BASE_URL + "ProfileSelectServlet", regCmd, HEADER);
+    return await axios.post(BASE_URL + "MemberSelectServlet", regCmd, HEADER);
   },
-  //회원정보 조회
-
   //회원탈퇴
   memberDelete: async function() {
     const regCheck = {
@@ -26,7 +26,6 @@ const api = {
     }
     return await axios.post(BASE_URL + "MemberDeleteServlet", regCheck, HEADER);
   },
-
   //회원정보수정
   memberUpdate: async function(value, type, nickname) {
     const updateObj = {
@@ -36,6 +35,29 @@ const api = {
     }
     return await axios.post(BASE_URL + "MemberUpdateServlet", updateObj, HEADER);
   },
-  
+  memberPhoneReg : async function(phone) {
+    const regCheck = {
+      phone : phone
+    }
+    return await axios.post(BASE_URL + "", regCheck, HEADER);
+  },
+  memberPhoneRegChk : async function(phone, regNum) {
+    const regCheck = {
+      phone : phone,
+      regNum : regNum
+    }
+    return await axios.post(BASE_URL + "", regCheck, HEADER);
+  },
+  //회원가입
+  memberInsert: async function(nickname, pwd, phone, email) {
+    const regCheck = {
+      nickname : nickname,
+      pwd : pwd,
+      phone : phone,
+      email : email,
+      adOk : localStorage.getItem("adOk")
+    }
+    return await axios.post(BASE_URL + "MemberInsertServlet", regCheck, HEADER);
+  },
 };
 export default api;
