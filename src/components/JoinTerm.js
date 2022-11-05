@@ -18,7 +18,7 @@ const JoinTerm = () =>{
     }
   };
 
-  if(!localStorage.getItem("adOK")){
+  if(localStorage.getItem("adOK")){
     window.location.replace("/join");
   }
 
@@ -306,9 +306,9 @@ const JoinTerm = () =>{
           && <button className="regchkbtnt"
             onClick={()=>{
               if (checkItems.includes("chk3")){
-                window.localStorage.setItem("adOk", "OK");
+                window.localStorage.setItem("adOk", "Y");
               } else{
-                window.localStorage.setItem("adOk", "NOK");
+                window.localStorage.setItem("adOk", "N");
               }
               window.location.replace("/join");
               }}

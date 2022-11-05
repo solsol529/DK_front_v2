@@ -45,6 +45,7 @@ const Join = ()=>{
   const [pwdlock, setPwdlock] = useState('white');
   const [pwdchklock, setpwdchklock] = useState('white');
 
+
   const onClickNickdup = () =>{
     console.log("닉네임 중복체크를 할때 들어온 값" + nickname);
     if((nickname.length !== 0) &&(nickname.length <= 10)){
@@ -78,10 +79,15 @@ const Join = ()=>{
       console.log("인증번호 요청하는 전화번호" + phone);
       try {
          const response = await api.memberPhoneReg(phone);
+         console.log(response.data.result);
          if (response.data.result === "OK"){
           setPhoneOkMsg("인증번호가 발송되었습니다!");
           setVerifyCode(response.data.code);
-         } else{
+         } else if(response.data.result === "DUP"){
+          setIsPhone(false);
+          setPhoneMsg("이미 가입된 전화번호입니다!");
+         }else{
+          setIsPhone(false);
           setPhoneMsg("인증번호 발송에 실패했습니다!");
          }
        } catch (e) {
@@ -95,10 +101,32 @@ const Join = ()=>{
     if(phonever == verifyCode){
       setIsPhonever(true);
       setPhoneverOkMsg("인증번호가 확인되었습니다!");
+      setVerifyCode('');
     } else{
       setIsPhonever(false);
       setPhoneverMsg("인증번호 확인에 실패했습니다!")
     }
+  }
+
+  const memberInsert = () =>{
+    const fetchData = async () => {
+      try {
+        setEmail(email===''?"NoInput":email);
+        const response = await api.memberInsert(nickname, pwd, phone, email);
+        if (response.data.result === "OK"){
+          window.localStorage.setItem("memberNum", response.data.memberNum);
+          window.localStorage.setItem("userNickname", nickname);
+          localStorage.removeItem("adOk")
+          window.location.replace("/main");
+          alert("회원가입에 성공했습니다!!~!!~!!");
+        } else{
+          alert("회원가입에 실패했습니다 ㅠㅡㅠ");
+        }
+       } catch (e) {
+         console.log(e);
+       }
+     };
+    fetchData();
   }
 
   // 정규식
@@ -320,7 +348,7 @@ const Join = ()=>{
           {!(isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever) 
           && <button className="regchkbtnf">가입하기</button>}
           { (isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever) 
-          && <button className="regchkbtnt">가입하기</button>}
+          && <button className="regchkbtnt" onClick={memberInsert}>가입하기</button>}
         </form>
       </div>
     </div>
