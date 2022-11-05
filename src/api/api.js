@@ -35,19 +35,25 @@ const api = {
     }
     return await axios.post(BASE_URL + "MemberUpdateServlet", updateObj, HEADER);
   },
+  memberNameDup: async function(nickname) {
+    const regCmd = {
+      nickname : nickname
+    }
+    return await axios.post(BASE_URL + "MemberNameDupServlet", regCmd, HEADER);
+  },
   memberPhoneReg : async function(phone) {
     const regCheck = {
       phone : phone
     }
-    return await axios.post(BASE_URL + "", regCheck, HEADER);
+    return await axios.post(BASE_URL + "MemberPhoneRegServlet", regCheck, HEADER);
   },
-  memberPhoneRegChk : async function(phone, regNum) {
-    const regCheck = {
-      phone : phone,
-      regNum : regNum
-    }
-    return await axios.post(BASE_URL + "", regCheck, HEADER);
-  },
+  // memberPhoneRegChk : async function(phone, regNum) {
+  //   const regCheck = {
+  //     phone : phone,
+  //     regNum : regNum
+  //   }
+  //   return await axios.post(BASE_URL + "", regCheck, HEADER);
+  // },
   //회원가입
   memberInsert: async function(nickname, pwd, phone, email) {
     const regCheck = {

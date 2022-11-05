@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, UNSAFE_NavigationContext } from "react-router-dom";
 import logo from "../resource/sleep_kirby.gif";
 import "../style/join.scss"
+import api from "../api/api";
 
 const Join = ()=>{
+
   const [nickname, setNickname] = useState('');
   const [pwd, setPwd] = useState('');
   const [pwdchk, setPwdchk] = useState('');
@@ -11,6 +13,7 @@ const Join = ()=>{
   const [phonereg, setPhonereg] = useState("+82");
   const [phone, setPhone] = useState('');
   const [phonever, setPhonever] = useState('');
+  const [verifyCode, setVerifyCode] = useState("");
  
   const [nicknameMsg, setNicknameMsg] = useState('');
   const [pwdMsg, setPwdMsg] = useState('');
@@ -36,10 +39,67 @@ const Join = ()=>{
   const [isPhonereg, setIsPhonereg] = useState('');
   const [isPhone, setIsPhone] = useState('');
   const [isPhonever, setIsPhonever] = useState('');
+  const [isOnPhoneReg, setIsOnPhoneReg] = useState(false);
 
   // 비밀번호, 비밀번호 확인 자물쇠 배경 위한 useState, white, red, blue 
   const [pwdlock, setPwdlock] = useState('white');
   const [pwdchklock, setpwdchklock] = useState('white');
+
+  const onClickNickdup = () =>{
+    console.log("닉네임 중복체크를 할때 들어온 값" + nickname);
+    if((nickname.length !== 0) &&(nickname.length <= 10)){
+      const fetchSearchData = async () => {
+        try {
+          const response = await api.memberNameDup(nickname);
+          if (response.data.result === "OK"){
+            setIsNicknamechk(true);
+            setIsNickname(true);
+            setNicknameOkMsg("사용 가능한 닉네임 입니다!");
+            setIsOnPhoneReg(true);
+          } else if(response.data.result === "NOK"){
+            setIsNicknamechk(false);
+            setIsNickname(false);
+            setNicknameMsg("이미 존재하는 닉네임입니다!");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
+    fetchSearchData();
+    } else{
+      setIsNicknamechk(false);
+      setIsNickname(false);
+      setNicknameMsg("닉네임 형식을 확인 후 중복 체크를 해주세요!");
+    }
+  };
+
+  const memberPhoneReg = () =>{
+    const fetchSearchData = async () => {
+      console.log("인증번호 요청하는 전화번호" + phone);
+      try {
+         const response = await api.memberPhoneReg(phone);
+         if (response.data.result === "OK"){
+          setPhoneOkMsg("인증번호가 발송되었습니다!");
+          setVerifyCode(response.data.code);
+         } else{
+          setPhoneMsg("인증번호 발송에 실패했습니다!");
+         }
+       } catch (e) {
+         console.log(e);
+       }
+     };
+    fetchSearchData();
+  }
+
+  const memberPhoneRegChk = () =>{
+    if(phonever == verifyCode){
+      setIsPhonever(true);
+      setPhoneverOkMsg("인증번호가 확인되었습니다!");
+    } else{
+      setIsPhonever(false);
+      setPhoneverMsg("인증번호 확인에 실패했습니다!")
+    }
+  }
 
   // 정규식
   // 패스워드 입력 조건 대문자, 소문자, 특수문자 포함 8자리 이상 20자리 이하
@@ -64,20 +124,6 @@ const Join = ()=>{
     } else if(!isNicknamechk){
       setIsNickname(false)
       setNicknameMsg("닉네임 중복 확인이 필요합니다!");
-    }
-  };
-
-  const onClickNickdup = () =>{
-    console.log("닉네임 중복체크를 할때 들어온 값" + nickname);
-    if((nickname.length !== 0) &&(nickname.length <= 10)){
-      setIsNicknamechk(true);
-      setIsNickname(true);
-      setNicknameOkMsg("사용 가능한 닉네임 입니다!");
-    }
-    else{
-      setIsNicknamechk(false);
-      setIsNickname(false);
-      setNicknameMsg("닉네임 형식을 확인 후 중복 체크를 해주세요!");
     }
   };
 
@@ -256,14 +302,17 @@ const Join = ()=>{
             <div className="phoneinput">
               <input type="tel" value={phone} name="phone" id="phone" className="phone" 
               onChange={onChangePhone} onBlur={onBlurPhone} placeholder="전화번호를 입력해 주세요"/>
-              <button className="phoneverbtn">인증번호 받기</button>
+              <button className="phoneverbtn" onClick={memberPhoneReg}
+              disabled={!isPhone}>인증번호 받기</button>
             </div>
             {!isPhone && <span className="err">{phoneMsg}</span>}
             {isPhone && <span className="msg">{phoneOkMsg}</span>}
             <div className="phoneverinput">
               <input type="text" value={phonever} name="phonevernum" id="phonevernum" className="phonevernum" 
               onChange={onChangePhonever} onBlur={onBlurPhonever} placeholder="인증번호를 입력해 주세요"/>
-              <button type="button" className="vernumchk">인증번호 확인</button>
+              <button type="button" className="vernumchk" onClick={memberPhoneRegChk}
+              >인증번호 확인</button>
+              {/* disabled={!isOnPhoneReg} */}
             </div>
             {!isPhonever && <span className="err">{phoneverMsg}</span>}
             {isPhonever && <span className="msg">{phoneverOkMsg}</span>}
