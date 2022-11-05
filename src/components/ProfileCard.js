@@ -1,13 +1,30 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import defaultProfileImg from "../resource/kriby_study2.png";
 import rankIcon1 from "../resource/kirby_icon1.png";
 import { logout } from "../util/common";
+import api from "../api/api";
 
 const ProfileCard = ()=>{
+
+  const [lists, setLists] = useState('');
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await api.boardInfoDetail();
+  //       setLists(response.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
   return(
     <div className="profilecard">
       <div className="profileimg">
-        <img src={defaultProfileImg} alt="기본 프로필 이미지(공부하는 커비)"/>
+        <img src={defaultProfileImg} alt="프로필 이미지"/>
       </div>
       <p>닉네임</p>
       <p>

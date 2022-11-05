@@ -10,6 +10,9 @@ import WritePage from "./pages/WritePage";
 import LoginPage from "./pages/LoginPage";
 import MemberInfoPage from "./pages/MemberInfoPage";
 import MyWritePage from "./pages/MyWritePage";
+import UnReg2 from "./pages/UnReg2";
+import EmailChange from "./pages/EmailChange";
+import PwdChange from "./pages/PwdChange";
 import MyCommentPage from "./pages/MyCommentPage";
 
 function App() {
@@ -28,7 +31,10 @@ function App() {
           <Route path='/write' element={<WritePage/>}/>
           <Route path='/memberinfo' element={<MemberInfoPage/>}/>
           <Route path='/mywrite' element={<MyWritePage/>}/>
-          <Route path='/mycomment' element={<MyCommentPage/>}/>
+          <Route path='/UnReg2' element={<UnReg2/>}/>
+          <Route path='/EmailChange' element={<EmailChange/>}/>
+          <Route path='/PwdChange' element={<PwdChange />} />
+          <Route path='/MyCommentPage' element={<MyCommentPage />} />
         </Routes>
         {/* <Footer/> */}
       </Router>
