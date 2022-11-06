@@ -4,5 +4,6 @@ const logout = () =>{
   localStorage.removeItem("memberNum");
   localStorage.removeItem("userNickname");
   window.location.replace("/");
-}
+};
+
 export {isLogin, logout};

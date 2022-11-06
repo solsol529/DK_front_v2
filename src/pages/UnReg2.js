@@ -50,6 +50,8 @@ const UnReg2 = () => {
           console.log(res.data.result);
           
           if(res.data.result === "OK") {
+            localStorage.removeItem("memberNum");
+            localStorage.removeItem("userNickname");
             window.location.replace("/login");
           } else {
           }

@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link, UNSAFE_NavigationContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../resource/sleep_kirby.gif";
 import "../style/join.scss"
 import api from "../api/api";
 
 const Join = ()=>{
+
+  if(!localStorage.getItem("adOk")){
+    window.location.replace("/jointerm");
+  }
 
   const [nickname, setNickname] = useState('');
   const [pwd, setPwd] = useState('');
@@ -13,7 +17,7 @@ const Join = ()=>{
   const [phonereg, setPhonereg] = useState("+82");
   const [phone, setPhone] = useState('');
   const [phonever, setPhonever] = useState('');
-  const [verifyCode, setVerifyCode] = useState("");
+  const [verifyCode, setVerifyCode] = useState('');
  
   const [nicknameMsg, setNicknameMsg] = useState('');
   const [pwdMsg, setPwdMsg] = useState('');
@@ -80,9 +84,10 @@ const Join = ()=>{
       try {
          const response = await api.memberPhoneReg(phone);
          console.log(response.data.result);
+         setVerifyCode(response.data.code);
+        //  console.log(response.data.code);
          if (response.data.result === "OK"){
-          setPhoneOkMsg("인증번호가 발송되었습니다!");
-          setVerifyCode(response.data.code);
+           setPhoneOkMsg("인증번호가 발송되었습니다!");
          } else if(response.data.result === "DUP"){
           setIsPhone(false);
           setPhoneMsg("이미 가입된 전화번호입니다!");
@@ -111,7 +116,6 @@ const Join = ()=>{
   const memberInsert = () =>{
     const fetchData = async () => {
       try {
-        setEmail(email===''?"NoInput":email);
         const response = await api.memberInsert(nickname, pwd, phone, email);
         if (response.data.result === "OK"){
           window.localStorage.setItem("memberNum", response.data.memberNum);
@@ -199,7 +203,7 @@ const Join = ()=>{
       setEmailOkMsg("사용 가능한 이메일 입니다!");
     } else{
       setIsEmail(false);
-      setEmailMsg("이메일 형식을 확인해주세요! (필수 항목 아님)");
+      setEmailMsg("이메일 형식을 확인해주세요!");
     }
   };
   const onChangePhonereg = (e) =>{
@@ -231,6 +235,7 @@ const Join = ()=>{
       setPhoneMsg("전화번호 형식을 확인해주세요!");
     }
   };
+  
   const onChangePhonever = (e) =>{
     setPhonever(e.target.value);
   };
@@ -251,8 +256,8 @@ const Join = ()=>{
     }
   };
   const onBlurEmail = (e) =>{
-    if(emailRegEx.test(e.target.value)){
-      setEmailMsg("이메일 형식을 확인해주세요! (필수 항목 아님)");
+    if(e.target.value.length === 0){
+      setEmailMsg("이메일은 필수 항목입니다!");
     }
   };
   const onBlurPhone = (e) =>{
@@ -273,7 +278,7 @@ const Join = ()=>{
         <Link to="/">개발하는 커비</Link>
       </div>
       <div div className="join">
-        <form action="#" className="joinform">
+        <div action="#" className="joinform">
           <div className="nicknamebox">
             <label htmlFor="nickname">닉네임</label>
             <div className="nicknameinput">
@@ -306,7 +311,8 @@ const Join = ()=>{
           </div>
 
           <div className="emailbox">
-            <label htmlFor="email">본인 확인 이메일<span className="selection">(선택)</span></label>
+            <label htmlFor="email">본인 확인 이메일</label>
+            {/* <span className="selection">(선택)</span> */}
             <div className="emailinput">
               <input type="email" value={email} name="email" id="email" className="email" 
               onChange={onChangeEmail} onBlur={onBlurEmail} placeholder="이메일을 입력해 주세요"/>
@@ -330,7 +336,7 @@ const Join = ()=>{
             <div className="phoneinput">
               <input type="tel" value={phone} name="phone" id="phone" className="phone" 
               onChange={onChangePhone} onBlur={onBlurPhone} placeholder="전화번호를 입력해 주세요"/>
-              <button className="phoneverbtn" onClick={memberPhoneReg}
+              <button type="button" className="phoneverbtn" onClick={memberPhoneReg}
               disabled={!isPhone}>인증번호 받기</button>
             </div>
             {!isPhone && <span className="err">{phoneMsg}</span>}
@@ -345,13 +351,14 @@ const Join = ()=>{
             {!isPhonever && <span className="err">{phoneverMsg}</span>}
             {isPhonever && <span className="msg">{phoneverOkMsg}</span>}
           </div>
-          {!(isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever) 
-          && <button className="regchkbtnf">가입하기</button>}
-          { (isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever) 
-          && <button className="regchkbtnt" onClick={memberInsert}>가입하기</button>}
-        </form>
+          {!(isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever&&isEmail) 
+          && <button type="button" className="regchkbtnf">가입하기</button>}
+          { (isNickname&&isPwd&&isPwdchk&&isPhone&&isPhonever&&isEmail) 
+          && <button type="button" className="regchkbtnt" onClick={memberInsert}>가입하기</button>}
+        </div>
       </div>
     </div>
   );
+
 };
 export default Join;

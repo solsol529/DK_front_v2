@@ -18,10 +18,6 @@ const JoinTerm = () =>{
     }
   };
 
-  if(localStorage.getItem("adOK")){
-    window.location.replace("/join");
-  }
-
   // 체크박스 전체 선택
   const handleAllCheck = (checked) => {
     if(checked) {
