@@ -132,6 +132,15 @@
   main > .memberinfocenter{
   grid-area: center;
   }
+
+  .pfImgChange{
+    .pfImgForm{
+      flex-direction: column;
+    }
+    input{
+      width: 50vw;
+    }
+  }
 }
 .unReg {
   background-color: rgba(242, 182, 210, .3);
@@ -152,6 +161,7 @@
 }
 
 .pfImgChange{
+  white-space:nowrap;
   background-color: rgba(255, 255, 255, .4);
   padding: 10px 10px 10px 10px;
   border-radius: 0px 0px 10px 10px;
