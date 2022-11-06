@@ -13,6 +13,7 @@ const WriteDetail = () =>{
           <img src={writeProfileImg} alt="게시글 프로필 이미지"/>
           <time>방금</time>
           <h3 className="nickname">와들디</h3>
+          <span className="writedelete">삭제</span>
         </div>
       </div>
       <p className="wcontent">
@@ -31,7 +32,7 @@ const WriteDetail = () =>{
       </ul>
       <button className="goodbtn">
         <img src={tomatoIcon} alt="맥시멈토마토"/>
-        <p>토마토</p>
+        <p>0</p>
       </button>
       <CommentList/>
       <form action="#" className="writecomment">

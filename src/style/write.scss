@@ -90,11 +90,17 @@
 .writedetail  .writeprofile{
   padding: 10px;
   display: grid;
-  grid-template-columns: 60px 100px;
+  grid-template-columns: 60px 100px auto;
   /* column에 사이즈 준거때문에 화면 엄청 줄엿을때 안줄어듦 */
   grid-template-areas: 
-  "image time"
-  "image nickname";
+  "image time delete"
+  "image nickname delete";
+}
+.writedelete{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  grid-area: delete;
 }
 .writedetail  .writeprofile > img{
   height: 40px;
@@ -168,6 +174,7 @@ li img{
 }
 .goodbtn > p{
   position: absolute;
+  width: 40px;
   top: 22px;
   padding-top: 2px;
   padding-bottom: 5px;
@@ -176,6 +183,19 @@ li img{
   font-size: 1rem;
   text-shadow: 0px 0px 5px red;
   background-color: rgb(255, 80, 98);
+}
+.commentP{
+  padding: 5px 0px 5px 0px;
+  display: flex;
+  align-items: center;
+  .commentdelete{
+    margin-left: auto;
+    padding-right: 10px;
+  }
+}
+
+.commentLi{
+  padding-bottom: 5px;
 }
 
 @media screen and (max-width:800px) {

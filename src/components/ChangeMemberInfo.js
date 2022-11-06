@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { storage } from "../api/firebase"
 import { Link } from "react-router-dom";
+import api from "../api/api";
 
 const ChangeMemberInfo = () =>{
   const [changeProfileImg, setChangeProfileImg] = useState(false);
@@ -28,8 +29,10 @@ const ChangeMemberInfo = () =>{
     }
     // 업로드 처리
     console.log("업로드 처리");
-    const storageRef = storage.ref("images/test/"); //어떤 폴더 아래에 넣을지 설정
-    const imagesRef = storageRef.child(image.name); //파일명
+    const storageRef = storage.ref("images/profile/"); //어떤 폴더 아래에 넣을지 설정
+    const imgName = (localStorage.getItem("memberNum") + "_pfImg");
+    const imagesRef = storageRef.child(imgName);
+    // const imagesRef = storageRef.child(image.name); //파일명
 
     console.log("파일을 업로드하는 행위");
     const upLoadTask = imagesRef.put(image);
@@ -55,6 +58,22 @@ const ChangeMemberInfo = () =>{
     );
   };
 
+  const pfImgChange = async() => {
+    try {
+      const res = await api.pfImgChange(imageUrl);
+      console.log(res.data.result);
+      if(res.data.result === "OK") {
+
+        window.location.replace("/main");
+      } else {
+
+      }
+    } catch (e) {
+      console.log("로그인 에러..");
+      console.log(e);
+    }
+  }
+
   // const [file, setFile] = useState();
   // const onFileChange = (event) => {
   //   // Updating the state
@@ -64,23 +83,27 @@ const ChangeMemberInfo = () =>{
   return(
     <div className="changememberinfo">
       <p>회원정보 수정</p>
-      <p onClick={()=>{setChangeProfileImg(true)}}>프로필 사진 변경</p>
+      <p onClick={()=>{setChangeProfileImg(true) }}
+      onDoubleClick={()=>{setChangeProfileImg(false)}}>프로필 사진 변경</p>
       {changeProfileImg && 
-        <div>
+        <div className="pfImgChange">
           {error && {error}}
-        <form onSubmit={onSubmit}>
-          <input type="file" onChange={handleImage} />
-          <button onClick={onSubmit}>업로드</button>
-        </form>
-        {imageUrl && (
-          <div>
-            <img width="400px" src={imageUrl} alt="uploaded" />
-          </div>
-        )}
+          <form className="pfImgForm" onSubmit={onSubmit}>
+            <input type="file" onChange={handleImage} />
+            <button onClick={onSubmit}>업로드</button>
+          </form>
+          {imageUrl && (
+            <div>
+              <p> 이미지 미리보기</p>
+              <img className="pfImgPreview" src={imageUrl} alt="uploaded" />
+              {/* width="400px" */}
+            </div>
+          )}
+          <button type="button" onClick={pfImgChange}>업로드한 이미지로 프로필 변경</button>
         </div>
       }
-      <p><Link to="/PwdChange" className="logout">비밀번호 변경</Link></p>
-      <p><Link to="/EmailChange" className="logout">이메일 변경</Link></p>
+      {!changeProfileImg && <p><Link to="/PwdChange" className="logout">비밀번호 변경</Link></p>}
+      {!changeProfileImg &&<p><Link to="/EmailChange" className="logout">이메일 변경</Link></p>}
     </div>
   );
 };

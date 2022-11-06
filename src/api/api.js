@@ -65,5 +65,11 @@ const api = {
     }
     return await axios.post(BASE_URL + "MemberInsertServlet", regCheck, HEADER);
   },
+  pfImgChange: async function(pfImg) {
+    const regCheck = {
+      pfImg : pfImg
+    }
+    return await axios.post(BASE_URL + "", regCheck, HEADER);
+  },
 };
 export default api;
