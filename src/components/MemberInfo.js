@@ -18,7 +18,7 @@ const MemberInfo = () =>{
   const [isChange, setIsChange] = useState('');
   const changeIsChange = (value) => {
     setIsChange(value);
-};
+  };
   useEffect(() => {    
     const memberData = async () => {
         try {

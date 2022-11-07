@@ -1,20 +1,20 @@
 import axios from "axios"
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
+import Loader from "./Loader";
 import goodIcon from "../resource/kirby_icon6.png";
 import commentIcon from "../resource/kirby_icon7.png";
 import api from "../api/api";
 import useInfiniteScroll from "./hooks/useInfiniteScroll";
 
-
-const Write = () =>{
+const Write = (props) =>{
   // 로컬 스토리지에 저장했던 게시판 이름을 불러옴
   const getBoard = window.localStorage.getItem("Board");
   const [writes, setWrties] = useState([]);
   const [offset, setOffset] = useState(0);
   const [isMax, setIsMax] = useState(false);
 
+  const [loading, setLoading] = useState(false);
 
   const onClickWrite = (val) => {
     console.log("상세 게시글로 이동 : " + val)
@@ -24,18 +24,22 @@ const Write = () =>{
   const writeItems = async () => {
     try {
       if(isMax){
+        setIsFetching(false);
         console.log('//max Data');
         return;
       }
       console.log('//new Data Fetcing');
-      setTimeout(async () => {
+      props.changeLoading(true);
+      const fetchData = async () => {
         const response = await api.boardPageWriteList(getBoard,String(offset),String(offset + 10)); // 게시판 페이지 게시글 목록 api
         setWrties(old => ([...old, ...response.data]));
         console.log('//new Data :',response.data);
         setOffset(old => old + 10) // offset을 계속 10씩 늘려주면 된다
         setIsFetching(false); // fetching이 false가 되어야 한번만 데이터를 불러줌 패칭 스테이트는 선언한 훅에서 나옴
         if(response.data.length < 10) setIsMax(true);
-      },2000)
+      }
+      fetchData();
+      props.changeLoading(false);
     } catch(e) {
       console.log(e);
     };
@@ -45,14 +49,12 @@ const Write = () =>{
 
 
   useEffect(() => {
-    // setLoading(true)
     writeItems();
-    // setLoading(false)
   }, []);
 
   return(
     <>
-      {writes && writes.map((item,index) => (
+    {writes && writes.map((item,index) => (
     <div className="write">
     <Link key={index} to="/write" onClick={()=>onClickWrite(item.writeNum)}>
       <h2 className="wname">{item.writeName}</h2>
@@ -74,7 +76,10 @@ const Write = () =>{
     </div>
           ))}
           {isFetching && <h1>New Data Fetcing .......</h1>}
+          {!isFetching && <h1>더이상 조회할 게시글이 없습니다</h1>}
     </>
   );
+  
+  
 };
 export default Write;

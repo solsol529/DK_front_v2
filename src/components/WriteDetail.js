@@ -1,3 +1,4 @@
+import React from 'react';
 import CommentList from "./CommentList";
 import writeProfileImg from "../resource/kriby_study2.png";
 import goodIcon from "../resource/kirby_icon6.png";
@@ -9,17 +10,7 @@ import api from "../api/api";
 const WriteDetail = () =>{
   const getWriteNum = window.localStorage.getItem("Detail");
   const getMemberNum = window.localStorage.getItem("memberNum");
-  console.log(getWriteNum);
   const [writeDetail, setWriteDetail] = useState('');
-
-  const onClickComment = async (val) => {
-    try {
-        await api.addComments(getMemberNum, val, getWriteNum);
-    } catch(e) {
-        console.log(e);
-    }
-  };
-  onClickComment();
 
   useEffect(() => {
     const writeData = async () => {
@@ -33,6 +24,7 @@ const WriteDetail = () =>{
     };
     writeData();
   },[])
+
   
   return(
     <div className="writedetail">
@@ -69,12 +61,7 @@ const WriteDetail = () =>{
         </>
         
       ))}
-    
       <CommentList/>
-      <form action="#" className="writecomment">
-        <input type="text" name="commentinput" className="commentinput"/>
-        <button onClick={()=>onClickComment()}><img src={writeIcon} alt="글쓰기아이콘"/></button>
-      </form>
     </div>
   );
 };

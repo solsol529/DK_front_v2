@@ -1,11 +1,30 @@
 import commentProfileImg from "../resource/kriby_study2.png";
 import { useState, useEffect } from "react";
 import api from "../api/api";
+import writeIcon from "../resource/kirby_icon8.png";
 
 const Comment = ()=>{
   const getWriteNum = window.localStorage.getItem("Detail");
-  console.log(getWriteNum);
+  const getMemberNum = window.localStorage.getItem("memberNum");
+
+  const [comment, setComment] = useState('');
   const [comments, setComments] = useState("");
+  const [isChange, setIsChange] = useState(true);
+
+  const handleChange = (e) => {
+    console.log("작성중 댓글 :" + e.target.value );
+    setComment(e.target.value);
+  }
+
+  const onClickComment = async () => {
+    try {
+        await api.addComments(getMemberNum, comment, getWriteNum);
+        console.log("댓글작성완료");
+        setIsChange(!isChange);
+    } catch(e) {
+        console.log(e);
+    }
+  };
 
   useEffect(() => {
     const commentsData = async () => {
@@ -18,7 +37,7 @@ const Comment = ()=>{
       }
     };
     commentsData();
-  },[]);
+  },[isChange]);
 
   return(
     <>
@@ -36,6 +55,12 @@ const Comment = ()=>{
     </li>
           ))}
 
+    <div className="writecomment">
+        <input type="text" name="commentinput" className="commentinput" onChange={handleChange}/>
+        <button onClick={() =>{
+          onClickComment();
+        }}><img src={writeIcon} alt="글쓰기아이콘"/></button>
+      </div>
     </>
     
   );

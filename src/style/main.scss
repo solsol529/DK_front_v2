@@ -31,6 +31,7 @@ body::-webkit-scrollbar {
 }
 
 .header {
+  z-index: 100;
   padding-left: 5%;
   padding-right: 5%;
   width: 80vw;
@@ -334,7 +335,7 @@ a{
   font-size: 0.8rem;
 }
 
-@media screen and (min-width: 801px) and (max-width: 1200px) {
+@media screen and (min-width: 901px) and (max-width: 1200px) {
 
   .maincenter{
   display: grid;
@@ -343,6 +344,22 @@ a{
   grid-auto-rows: 1fr;
   }
 
+  .mainmain{
+    // padding-top: 116px;
+  }
+}
+@media screen and (min-width: 801px) and (max-width: 900px) {
+
+  .maincenter{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-auto-rows: 1fr;
+  }
+
+  .mainmain{
+    padding-top: 116px;
+  }
 }
 @media screen and (max-width:800px) {
   .header{
