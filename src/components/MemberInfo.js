@@ -15,7 +15,10 @@ import UnReg from "./UnReg";
 const MemberInfo = () =>{
   const [memberInfo, setMemberInfo] = useState('');
   const getNickname = window.localStorage.getItem("userNickname");
-
+  const [isChange, setIsChange] = useState('');
+  const changeIsChange = (value) => {
+    setIsChange(value);
+};
   useEffect(() => {    
     const memberData = async () => {
         try {
@@ -27,7 +30,7 @@ const MemberInfo = () =>{
         }
     };
     memberData();
-  }, []);
+  }, [isChange]);
 
   const memberInsert = () =>{
     const fetchSearchData = async () => {
@@ -48,30 +51,33 @@ const MemberInfo = () =>{
     <div className="memberinfomain">
       <div className="memberinfoheader">
         <div className="profilecard">
-          <div className="profileimg">
-            <img src={defaultProfileImg} alt="기본 프로필 이미지(공부하는 커비)"/>
-          </div>
-          <div className="profileinfo">
           {memberInfo && memberInfo.map(member => (
-                    <div key={member.nickname}>
-                        <p>회원번호 : {member.member_num}</p>
-                        <p>닉네임 : {member.nickname}</p>
-                        <p>가입일 : {member.regDate}</p>
-                        <p>전화번호 : {member.phone}</p>
-                        <p>이메일 : {member.email}</p>
-                        <p>회원등급 : <img className="memberrankimg" src={
-                        member.grade === "새싹"? rankIcon1 : (member.grade === "잎새"? rankIcon2 : 
-                        (member.grade === "가지열매나무"? rankIcon3 : (member.grade === "열매"? rankIcon4:rankIcon5)))
-                        } alt={member.grade}/>{member.grade}
-                        </p>
-                    </div>
+            <>
+            <div className="profileimg">
+            {member.pfImg? <img src={member.pfImg} alt="프로필 이미지"/> :
+            <img src={defaultProfileImg} alt="기본 프로필 이미지(공부하는 커비)"/>}
+            </div>
+            <div className="profileinfo">
+              <div key={member.nickname}>
+                  <p>회원번호 : {member.member_num}</p>
+                  <p>닉네임 : {member.nickname}</p>
+                  <p>가입일 : {member.regDate}</p>
+                  <p>전화번호 : {member.phone}</p>
+                  <p>이메일 : {member.email}</p>
+                  <p>회원등급 : <img className="memberrankimg" src={
+                  member.grade === "새싹"? rankIcon1 : (member.grade === "잎새"? rankIcon2 : 
+                  (member.grade === "가지열매나무"? rankIcon3 : (member.grade === "열매"? rankIcon4:rankIcon5)))
+                  } alt={member.grade}/>{member.grade}
+                  </p>
+              </div>
+            </div>
+            </>
           ))}
-          </div>
           <Link to="/login" className="logout">로그아웃</Link>
         </div>
       </div>
       <div className="memberinfocenter">
-        <ChangeMemberInfo/>
+        <ChangeMemberInfo changeIsChange={changeIsChange}/>
         <MyWrite/>
         <UnReg />
       </div>

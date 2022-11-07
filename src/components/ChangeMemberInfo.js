@@ -3,11 +3,11 @@ import { storage } from "../api/firebase"
 import { Link } from "react-router-dom";
 import api from "../api/api";
 
-const ChangeMemberInfo = () =>{
+const ChangeMemberInfo = (props) =>{
   const [changeProfileImg, setChangeProfileImg] = useState(false);
   const [changePwd, setChangePwd] = useState(false);
   const [changeEmail, setChangeEmail] = useState(false);
-
+  let cnt = 0;
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
@@ -63,8 +63,9 @@ const ChangeMemberInfo = () =>{
       const res = await api.pfImgChange(imageUrl);
       console.log(res.data.result);
       if(res.data.result === "OK") {
-
-        window.location.replace("/main");
+        setChangeProfileImg(false);
+        props.changeIsChange(++cnt);
+        // window.location.replace("/memberinfo");
       } else {
 
       }

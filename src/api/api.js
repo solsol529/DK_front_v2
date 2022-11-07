@@ -67,9 +67,10 @@ const api = {
   },
   pfImgChange: async function(pfImg) {
     const regCheck = {
-      pfImg : pfImg
+      pfImg : pfImg,
+      target : localStorage.getItem("memberNum")
     }
-    return await axios.post(BASE_URL + "", regCheck, HEADER);
+    return await axios.post(BASE_URL + "PfImgChangeServlet", regCheck, HEADER);
   },
 };
 export default api;
