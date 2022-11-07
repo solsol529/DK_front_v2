@@ -137,5 +137,31 @@ const api = {
     };
     return await axios.post(BASE_URL + "AddCommentsServlet", addCommentsObj, HEADER);
   },
+  // 댓글 삭제
+  deleteComments : async function(commentNum) {
+    const deleteComments = {
+      cmd : "CommentsDelete",
+      commentNum : commentNum
+    };
+    return await axios.post(BASE_URL + "DeleteCommentsServlet", deleteComments, HEADER);
+  },
+  // 좋아요 중복 확인
+  alreadyGood : async function(writeNum, memberNum) {
+    const alreadyGoodObj = {
+      cmd : "AlreadyGoodInfo",
+      writeNum : writeNum,
+      memberNum : memberNum
+    };
+    return await axios.post(BASE_URL + "AlreadyGoodServlet", alreadyGoodObj, HEADER);
+  },
+  // 좋아요 등록
+  addGood : async function(memberNum, writeNum) {
+    const addGoodObj = {
+      cmd : "GoodAdd",
+      memberNum :  memberNum,
+      writeNum : writeNum
+    };
+    return await axios.post(BASE_URL + "AddGoodServlet", addGoodObj, HEADER);
+  },
 };
 export default api;
