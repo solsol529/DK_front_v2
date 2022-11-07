@@ -30,6 +30,17 @@ const WriteDetail = (props) =>{
     }
   };
 
+  const writeDelete = async () => {
+    try {
+      await api.writeDelete(getWriteNum);
+      alert("게시글이 성공적으로 삭제되었습니다!")
+      window.location.replace("/board");
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+
   useEffect(() => {
     const writeData = async () => {
       try {
@@ -59,7 +70,8 @@ const WriteDetail = (props) =>{
           <time>{write.writeDate}</time>
           <h3 className="nickname">{write.nickname}</h3>
           {write.nickname == localStorage.getItem("userNickname") && 
-          <span className="writedelete">삭제</span>}
+          <span className="writedelete" onClick={()=>{
+            writeDelete()}}>삭제</span>}
         </div>
       </div>
       <p className="wcontent" >

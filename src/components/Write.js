@@ -31,12 +31,20 @@ const Write = (props) =>{
       console.log('//new Data Fetcing');
       props.changeLoading(true);
       const fetchData = async () => {
-        const response = await api.boardPageWriteList(getBoard,String(offset),String(offset + 10)); // 게시판 페이지 게시글 목록 api
-        setWrties(old => ([...old, ...response.data]));
-        console.log('//new Data :',response.data);
-        setOffset(old => old + 10) // offset을 계속 10씩 늘려주면 된다
-        setIsFetching(false); // fetching이 false가 되어야 한번만 데이터를 불러줌 패칭 스테이트는 선언한 훅에서 나옴
-        if(response.data.length < 10) setIsMax(true);
+        if(props.part == "board"){
+          const response = await api.boardPageWriteList(getBoard,String(offset),String(offset + 10)); // 게시판 페이지 게시글 목록 api
+          setWrties(old => ([...old, ...response.data]));
+          console.log('//new Data :',response.data);
+          setOffset(old => old + 10) // offset을 계속 10씩 늘려주면 된다
+          setIsFetching(false); // fetching이 false가 되어야 한번만 데이터를 불러줌 패칭 스테이트는 선언한 훅에서 나옴
+          if(response.data.length < 10) setIsMax(true);
+        } else if(props.part == "search"){
+
+        } else if(props.part == "mywrite"){
+
+        } else if(props.part == "mycomment"){
+
+        }
       }
       fetchData();
       props.changeLoading(false);

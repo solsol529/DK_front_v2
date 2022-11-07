@@ -163,5 +163,12 @@ const api = {
     };
     return await axios.post(BASE_URL + "AddGoodServlet", addGoodObj, HEADER);
   },
+  writeDelete : async function(writeNum) {
+    const regCheck = {
+      cmd : "WriteDelete",
+      writeNum : writeNum
+    }
+    return await axios.post(BASE_URL + "WriteDeleteServlet", regCheck, HEADER);
+  },
 };
 export default api;

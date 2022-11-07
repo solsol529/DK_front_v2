@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import kirbyLogo from "../resource/sleep_kirby.gif"
 // import "../style/main.scss"
 const Header = () =>{
+  const handleKeyPress = e => {
+    if(e.key === 'Enter') {
+      console.log(e.target.value);
+      window.location.replace(`/search/${e.target.value}`);
+    }
+  }
+
   return(
     <div className="header">
       <div className="logo">
@@ -9,9 +16,10 @@ const Header = () =>{
         <Link to="/main">개발하는 커비</Link>
       </div>
       <div className="search">
-        <form action="#">
-          <input type="text" placeholder="전체 게시판의 글을 검색하세요!"/>
-        </form>
+        <div>
+          <input type="text" placeholder="전체 게시판의 글을 검색하세요!"
+          onKeyPress={handleKeyPress}/>
+        </div>
       </div>
     </div>
   );
