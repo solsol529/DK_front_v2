@@ -1,29 +1,80 @@
+import axios from "axios"
 import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+
 import goodIcon from "../resource/kirby_icon6.png";
 import commentIcon from "../resource/kirby_icon7.png";
+import api from "../api/api";
+import useInfiniteScroll from "./hooks/useInfiniteScroll";
+
+
 const Write = () =>{
+  // 로컬 스토리지에 저장했던 게시판 이름을 불러옴
+  const getBoard = window.localStorage.getItem("Board");
+  const [writes, setWrties] = useState([]);
+  const [offset, setOffset] = useState(0);
+  const [isMax, setIsMax] = useState(false);
+
+
+  const onClickWrite = (val) => {
+    console.log("상세 게시글로 이동 : " + val)
+    window.localStorage.setItem("Detail", val);
+  }
+
+  const writeItems = async () => {
+    try {
+      if(isMax){
+        console.log('//max Data');
+        return;
+      }
+      console.log('//new Data Fetcing');
+      setTimeout(async () => {
+        const response = await api.boardPageWriteList(getBoard,String(offset),String(offset + 10)); // 게시판 페이지 게시글 목록 api
+        setWrties(old => ([...old, ...response.data]));
+        console.log('//new Data :',response.data);
+        setOffset(old => old + 10) // offset을 계속 10씩 늘려주면 된다
+        setIsFetching(false); // fetching이 false가 되어야 한번만 데이터를 불러줌 패칭 스테이트는 선언한 훅에서 나옴
+        if(response.data.length < 10) setIsMax(true);
+      },2000)
+    } catch(e) {
+      console.log(e);
+    };
+  }
+  // hook 선언 (인자값에는 데이터를 불러오는 함수 입력(writeItems))
+  const [isFetching,setIsFetching] = useInfiniteScroll(writeItems)
+
+
+  useEffect(() => {
+    // setLoading(true)
+    writeItems();
+    // setLoading(false)
+  }, []);
+
   return(
+    <>
+      {writes && writes.map((item,index) => (
     <div className="write">
-      <Link to="#">
-        <h2 className="wname">귀여운 커비</h2>
-        <p className="wcontent">
-          봄바람과 함께 푸푸푸랜드에 찾아온 모험의 용사<br/>
-          적을 빨아들이고 능력을 카피해, 변신하기도!<br/>
-          무기를 휘두르고, 신기한 기술도 사용하고, 때로는 모습을 바꿔 활약!!</p>
-        <time>방금</time>
-        <h3 className="nickname">와들디</h3>
-        <ul className="status">
-          <li className="good">
-            <img src={goodIcon} alt="좋아요"/>
-            <span>0</span>
-          </li>
-          <li className="comment">
-            <img src={commentIcon} alt="댓글수"/>
-            <span>0</span>
-          </li>
-        </ul>
-      </Link>
+    <Link key={index} to="/write" onClick={()=>onClickWrite(item.writeNum)}>
+      <h2 className="wname">{item.writeName}</h2>
+      <p className="wcontent">
+      {item.writeContents}</p>
+      <time>{item.writeDate}</time>
+      <h3 className="nickname">{item.nickName}</h3>
+      <ul className="status">
+        <li className="good">
+          <img src={goodIcon} alt="좋아요"/>
+          <span>{item.countGood}</span>
+        </li>
+        <li className="comment">
+          <img src={commentIcon} alt="댓글수"/>
+          <span>{item.countComment}</span>
+        </li>
+      </ul>
+    </Link>
     </div>
+          ))}
+          {isFetching && <h1>New Data Fetcing .......</h1>}
+    </>
   );
 };
 export default Write;

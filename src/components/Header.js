@@ -5,8 +5,8 @@ const Header = () =>{
   return(
     <div className="header">
       <div className="logo">
-        <Link to="#"><img src={kirbyLogo} alt="개발하는 커비"/></Link>
-        <Link to="#">개발하는 커비</Link>
+        <Link to="/main"><img src={kirbyLogo} alt="개발하는 커비"/></Link>
+        <Link to="/main">개발하는 커비</Link>
       </div>
       <div className="search">
         <form action="#">

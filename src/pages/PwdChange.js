@@ -92,6 +92,7 @@ const PwdChange = () => {
 
 
     return (
+        <div className="pwdchange_container_first">
         <div className="pwdchange_container">
             <p className="pwd_change">비밀번호 변경</p>
             <p className="pwd_current">현재 비밀번호
@@ -117,6 +118,7 @@ const PwdChange = () => {
             </div>
             <span className="pwd_change_yes" onClick={onClickEmailUpdate1}>변경</span>
             <Link to='/memberinfo' className="pwd_cancle">취소</Link>
+        </div>
         </div>
     )
 } 

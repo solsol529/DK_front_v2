@@ -1,6 +1,6 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import MemberInfoMyWrite from "../components/MemberInfoMyWrite";
+import MemberInfoMyComment from "../components/MemberInfoMyComment";
 import { isLogin } from "../util/common";
 
 const MyCommentPage = () =>{
@@ -13,7 +13,7 @@ const MyCommentPage = () =>{
         <div className="headerwrapper">
           <Header/>
         </div>
-        <MemberInfoMyWrite/>
+        <MemberInfoMyComment/>
         <Footer/>
       </div>
     );

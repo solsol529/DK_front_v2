@@ -1,11 +1,12 @@
-// .unRegck_container {
-//     position: relative;
-// }
+.unRegck_container_first {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
 .unRegck {
     font-size: 20px;
     position: relative;
-    top: 300px;
-    left: 300px;
     line-height: 30px;
     background-color: rgba(242, 182, 210, .3);
     border-radius: 10px;   

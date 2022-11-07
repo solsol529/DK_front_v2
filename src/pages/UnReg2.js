@@ -62,6 +62,7 @@ const UnReg2 = () => {
     }
 
     return (
+      <div className='unRegck_container_first'>
         <div className='unRegck_container'>
             {/* <Header /> */}
             <div className='unRegck'>
@@ -81,7 +82,7 @@ const UnReg2 = () => {
             <Link to='/memberinfo' className='unRegck_cancle'>취소</Link>
             </div>
         </div>
-    
+        </div>         
     )
 }
 export default UnReg2;
