@@ -28,6 +28,7 @@ const Comment = ()=>{
   const onClickDeleteComment = async (val) => {
     try {
       await api.deleteComments(val);
+      setIsChange(!isChange);
     } catch(e) {
       console.log(e);
     }
@@ -55,7 +56,10 @@ const Comment = ()=>{
           <img className="commentPfImg" src={commentProfileImg} alt="기본 댓글 프로필 이미지"/>}
           <span className="commentnickname">{comment.nickname}</span>
           {comment.nickname == localStorage.getItem("userNickname") &&
-          <span className="commentdelete" onClick={()=>onClickDeleteComment(comment.commentNum)}>삭제</span>}
+          <span className="commentdelete" onClick={()=>{
+            onClickDeleteComment(comment.commentNum)
+            console.log(comment.commentNum)}
+            }>삭제</span>}
         </p>
         <p>{comment.commentContent}</p>
         <time>{comment.writeDate}</time>
