@@ -6,6 +6,7 @@ import Write from "./Write";
 import BoardName from "./BoardName";
 import { useState, useEffect } from "react";
 import api from "../api/api";
+import MyCommentWrite from "./MyCommentWrite";
 
 const MemberInfoMyComment = () =>{
   const [memberInfo, setMemberInfo] = useState('');
@@ -46,9 +47,9 @@ const MemberInfoMyComment = () =>{
         </div>
       </div>
       <div className="memberinfocenter">
-        <BoardName name="나의 작성 글"/>
+        <BoardName name="내가 댓글 작성한 글" notlink={true}/>
         <div className="mywriteview">
-          <Write/>
+          <MyCommentWrite/>
         </div>
       </div>
     </div>

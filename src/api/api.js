@@ -178,5 +178,28 @@ const api = {
     };
     return await axios.post(BASE_URL + "WriteSearchServlet", writeListObj, HEADER);
   },
+  // 내 게시글 목록
+  myWriteList : async function(memberNum,offsetNum,limitNum) {
+    console.log(memberNum, offsetNum, limitNum)
+    const writeListObj = {
+      cmd : "BoardPageWriteList",
+      memberNum : memberNum,
+      offsetNum : offsetNum,
+      limitNum : limitNum
+    };
+    return await axios.post(BASE_URL + "MyWriteSearchServlet", writeListObj, HEADER);
+  },
+  // 내가 댓글 단 게시글
+  mycommentWriteList : async function(memberNum,offsetNum,limitNum) {
+    console.log(memberNum, offsetNum, limitNum)
+    const writeListObj = {
+      cmd : "commentWriteList",
+      memberNum : memberNum,
+      offsetNum : offsetNum,
+      limitNum : limitNum
+    };
+    return await axios.post(BASE_URL + "MyCommentSearchServlet", writeListObj, HEADER);
+  },
+  
 };
 export default api;

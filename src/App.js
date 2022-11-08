@@ -35,7 +35,7 @@ function App() {
           <Route path='/UnReg2' element={<UnReg2/>}/>
           <Route path='/EmailChange' element={<EmailChange/>}/>
           <Route path='/PwdChange' element={<PwdChange />} />
-          <Route path='/MyCommentPage' element={<MyCommentPage />} />
+          <Route path='/mycomment' element={<MyCommentPage />} />
           <Route path="/search/:query" element={<SearchPage/>}/>
         </Routes>
         {/* <Footer/> */}
