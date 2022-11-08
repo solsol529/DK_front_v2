@@ -9,8 +9,14 @@ const BoardCenter = () =>{
   const getBoard = window.localStorage.getItem("Board");
   const [boardDetail, setBoardDetail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isChange, setIsChange] = useState(false);
+
   const changeLoading = (value) => {
     setLoading(value);
+  };
+
+  const changeIsChange = (value) => {
+    setIsChange(value);
   };
 
   useEffect(() => {
@@ -20,26 +26,44 @@ const BoardCenter = () =>{
         setBoardDetail(response.data);
         console.log(response.data);//// 배열
       } catch(e) {
-          console.log(e);
+        console.log(e);
       }
     };
     boardData();
-  },[])
-  // <Write/> 게시글 목록 있는 컴포넌트
+    console.log("isChange : " + isChange);
+  },[isChange])
 
+  // <Write/> 게시글 목록 있는 컴포넌트
   if(loading){
     return (<Loader/>)
   }
   
   return(
-    <div className="boardcenter">
+    // <div className="boardcenter">
+    //   {boardDetail&&boardDetail.map(board => (
+    //   <BoardName key={board.boardName} name={board.boardName} />))}
+    //   <NewWrite changeIsChange={changeIsChange}/>
+    //   <Write loading={loading} changeLoading={changeLoading}/> 
+    //   {/* <Write/> */}
+    // </div>
+    <>
+    {isChange && 
+      <div className="boardcenter">
       {boardDetail&&boardDetail.map(board => (
       <BoardName key={board.boardName} name={board.boardName} />))}
-      <NewWrite/>
+      <NewWrite changeIsChange={changeIsChange}/>
       <Write loading={loading} changeLoading={changeLoading}/> 
       {/* <Write/> */}
-
-    </div>
+    </div>}
+    {!isChange && 
+      <div className="boardcenter">
+      {boardDetail&&boardDetail.map(board => (
+      <BoardName key={board.boardName} name={board.boardName} />))}
+      <NewWrite changeIsChange={changeIsChange}/>
+      <Write loading={loading} changeLoading={changeLoading}/> 
+      {/* <Write/> */}
+    </div>}
+    </>
   );
 };
 export default BoardCenter;

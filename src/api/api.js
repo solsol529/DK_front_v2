@@ -200,6 +200,17 @@ const api = {
     };
     return await axios.post(BASE_URL + "MyCommentSearchServlet", writeListObj, HEADER);
   },
+  // 게시글 등록 
+  NewWriteReg : async function(boardName, writeName, memberNum, writeContents) {
+    const newWriteObj = {
+      cmd : "WriteInsert",
+      boardName : boardName,
+      writeName : writeName,
+      memberNum : memberNum,
+      writeContents : writeContents
+    };
+    return await axios.post(BASE_URL + "WriteInsertServlet", newWriteObj, HEADER);
+  }
   
 };
 export default api;
