@@ -15,6 +15,7 @@ const PwdChange = () => {
     //오류메시지
     const [pwMessage, setPwMessage] = useState("");
     const [conPwMessage, setConPwMessage] = useState("");
+    const [conPwMessage2, setConPwMessage2] = useState("");
 
     // 유효성 검사
     const [isPw, setIsPw] = useState(false)
@@ -22,13 +23,13 @@ const PwdChange = () => {
 
 
     //현재 비밀번호 맞는지 ck
-    const onClickEmailUpdate1 = async() => {
+    const onClickPwdUpdate1 = async() => {
         try {
             const res = await api.userLogin(getNickname, inputPwd1);
             console.log(res.data);
-           
             if(res.data.result === "OK") {
-                onClickEmailUpdate2();
+                console.log("비밀번호 체크중");
+                onClickPwdUpdate2();
             } else {
             }           
         } catch (e) {
@@ -36,7 +37,7 @@ const PwdChange = () => {
         }
     }
     //새 비밀번호 변경
-    const onClickEmailUpdate2 = async() => {
+    const onClickPwdUpdate2 = async() => {
         try {
             const memberUpdate = await api.memberUpdate(inputPwd3, "pwd", getNickname);
             console.log(memberUpdate.data.result);
@@ -67,13 +68,13 @@ const PwdChange = () => {
 
     //새 비밀번호 확인 일치 ck
     const onChangepwd3 = (e) => {
-        const passwordCurrent = e.target.value;
-        setInputPwd3(passwordCurrent)
-        if (passwordCurrent !== inputPwd2) {
-            setConPwMessage('비밀 번호가 일치하지 않습니다.')
+        const passwordCurrent2 = e.target.value;
+        setInputPwd3(passwordCurrent2)
+        if (passwordCurrent2 !== inputPwd2) {
+            setConPwMessage2('비밀 번호가 일치하지 않습니다.')
             setIsConPw(false)
         } else {
-            setConPwMessage('비밀 번호가 일치 합니다. )')
+            setConPwMessage2('비밀 번호가 일치 합니다. )')
             setIsConPw(true);
         }      
     }
@@ -89,7 +90,6 @@ const PwdChange = () => {
             setIsConPw(true);
         }      
     }
-
 
     return (
         <div className="pwdchange_container_first">
@@ -114,9 +114,9 @@ const PwdChange = () => {
             </p>
             <div className="pwd_hint2">
                 {inputPwd3.length > 0 && (
-                <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
+                <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage2}</span>)}
             </div>
-            <span className="pwd_change_yes" onClick={onClickEmailUpdate1}>변경</span>
+            <span className="pwd_change_yes" onClick={onClickPwdUpdate1}>변경</span>
             <Link to='/memberinfo' className="pwd_cancle">취소</Link>
         </div>
         </div>
