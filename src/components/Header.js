@@ -5,6 +5,7 @@ const Header = () =>{
   const handleKeyPress = e => {
     if(e.key === 'Enter') {
       console.log(e.target.value);
+      localStorage.setItem("write", "search");
       window.location.replace(`/search/${e.target.value}`);
     }
   }

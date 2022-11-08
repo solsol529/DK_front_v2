@@ -36,7 +36,7 @@ const BoardCenter = () =>{
       {boardDetail&&boardDetail.map(board => (
       <BoardName key={board.boardName} name={board.boardName} />))}
       <NewWrite/>
-      <Write loading={loading} changeLoading={changeLoading} part="board"/> 
+      <Write loading={loading} changeLoading={changeLoading}/> 
       {/* <Write/> */}
 
     </div>

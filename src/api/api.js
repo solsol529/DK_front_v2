@@ -170,5 +170,13 @@ const api = {
     }
     return await axios.post(BASE_URL + "WriteDeleteServlet", regCheck, HEADER);
   },
+  writeSearch : async function(query,offsetNum,limitNum) {
+    const writeListObj = {
+      query : query,
+      offsetNum,
+      limitNum
+    };
+    return await axios.post(BASE_URL + "WriteSearchServlet", writeListObj, HEADER);
+  },
 };
 export default api;

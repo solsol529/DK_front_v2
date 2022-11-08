@@ -233,7 +233,7 @@ textarea::placeholder{
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(2, minmax(50px, auto));
-  grid-auto-rows: 1fr;
+  grid-auto-rows: auto;
   grid-area: center;
   }
 
