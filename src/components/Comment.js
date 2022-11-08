@@ -21,6 +21,7 @@ const Comment = ()=>{
         await api.addComments(getMemberNum, comment, getWriteNum);
         console.log("댓글작성완료");
         setIsChange(!isChange);
+        setComment("");
     } catch(e) {
         console.log(e);
     }

@@ -46,7 +46,7 @@ const MemberInfoMyWrite = () =>{
         </div>
       </div>
       <div className="memberinfocenter">
-        <BoardName name="나의 작성 글"/>
+        <BoardName name="내가 작성한 글" notlink={true}/>
         <div className="mywriteview">
           <Write/>
         </div>
