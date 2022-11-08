@@ -28,25 +28,25 @@ const MemberInfoMyComment = () =>{
       <div className="memberinfoheader">
         <div className="profilecard">
           <div className="profileimg">
-            <img src={defaultProfileImg} alt="±âº» ÇÁ·ÎÇÊ ÀÌ¹ÌÁö(°øºÎÇÏ´Â Ä¿ºñ)"/>
+            <img src={defaultProfileImg} alt="ê¸°ë³¸ í”„ë¡œí•„ ì´ë¯¸ì§€(ê³µë¶€í•˜ëŠ” ì»¤ë¹„)"/>
           </div>
           <div className="profileinfo">
           {memberInfo && memberInfo.map(member => (
                     <div key={member.nickname}>
-                        <p>È¸¿ø¹øÈ£ : {member.member_num}</p>
-                        <p>´Ğ³×ÀÓ : {member.nickname}</p>
-                        <p>°¡ÀÔÀÏ : {member.join}</p>
-                        <p>ÀüÈ­¹øÈ£ : {member.phone}</p>
-                        <p>ÀÌ¸ŞÀÏ : {member.email}</p>
-                        <p>È¸¿øµî±Ş : {member.grade}</p>
+                        <p>íšŒì›ë²ˆí˜¸ : {member.member_num}</p>
+                        <p>ë‹‰ë„¤ì„ : {member.nickname}</p>
+                        <p>ê°€ì…ì¼ : {member.join}</p>
+                        <p>ì „í™”ë²ˆí˜¸ : {member.phone}</p>
+                        <p>ì´ë©”ì¼ : {member.email}</p>
+                        <p>íšŒì›ë“±ê¸‰ : {member.grade}</p>
                     </div>
           ))}
           </div>
-          <Link to="/login" className="logout">·Î±×¾Æ¿ô</Link>
+          <Link to="/login" className="logout">ë¡œê·¸ì•„ì›ƒ</Link>
         </div>
       </div>
       <div className="memberinfocenter">
-        <BoardName name="³ªÀÇ ´ñ±Û ÀÛ¼º±Û"/>
+        <BoardName name="ë‚˜ì˜ ì‘ì„± ê¸€"/>
         <div className="mywriteview">
           <Write/>
         </div>

@@ -66,8 +66,8 @@ const EmailChange = () => {
 
 
     return (
-        <div className="emailchangeWrapper">
-            <div className="emailchange_container">
+        <div className="emailchange_container_first">
+        <div className="emailchange_container">
             <p className="email_change">이메일 변경</p>
             <p className="email_current">현재 이메일 주소</p>
             {memberInfo && memberInfo.map(member => (
@@ -86,12 +86,11 @@ const EmailChange = () => {
                 {inputEmail.length > 0 && (
                 <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
             </div>
-            <div>
-                <span className="email_change_yes" onClick={onClickEmailUpdate}>변경</span>
-                <Link to='/memberinfo' className="email_cancle">취소</Link>
-            </div>
+            <span className="email_change_yes" onClick={onClickEmailUpdate}>변경</span>
+            <Link to='/memberinfo' className="email_cancle">취소</Link>
         </div>
-        </div>  
+        </div>
+        
     )
 } 
 export default EmailChange;

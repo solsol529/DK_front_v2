@@ -60,13 +60,17 @@ const Login = () =>{
     window.location.replace("/main");
   }
 
+  // const [mail, setMail] = useState('');
+
+  // const handleChange = (e) => {
+  //   console.log("선택한 값 :" + e.target.value );
+  //   setMail(e.target.value);
+  // }
+
   return(
     <>
-    <Link to="/main"> 메인페이지 </Link>
-    <Link to="/board"> 게시판 </Link>
-    <Link to="/write"> 게시글 </Link>
-    <Link to="/memberinfo"> 회원정보 </Link>
-    <Link to="/join"> 회원가입2 </Link>
+    {/* <label><input type="radio" name="selectBtn" value="notice" onChange={handleChange}/> 공지사항 </label>
+    <label><input type="radio" name="selectBtn" value="ad" onChange={handleChange}/> 광고 </label> */}
     <div className="loginBox">
       <div className="logostart">
         <img src={logo} alt="개발하는커비"/>

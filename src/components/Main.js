@@ -6,7 +6,7 @@ const Main = () =>{
     <div className="mainmain">
       <Left position="main"/>
       <Center position="main"/>
-      <Right position="main"/>
+      <Right position="main" hotName="좋아요 많이 달린 게시글" newComName="최근 댓글 달린 게시글"/>
     </div>
   );
 };

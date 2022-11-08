@@ -7,14 +7,10 @@ import commentIcon from "../resource/kirby_icon7.png";
 import api from "../api/api";
 import useInfiniteScroll from "./hooks/useInfiniteScroll";
 
-const Write = (props) =>{
-  // 로컬 스토리지에 저장했던 게시판 이름을 불러옴
-  const getBoard = window.localStorage.getItem("Board");
+const SearchWrite = (props) =>{
   const [writes, setWrties] = useState([]);
   const [offset, setOffset] = useState(0);
   const [isMax, setIsMax] = useState(false);
-
-  const [loading, setLoading] = useState(false);
 
   const onClickWrite = (val) => {
     console.log("상세 게시글로 이동 : " + val)
@@ -30,9 +26,9 @@ const Write = (props) =>{
       }
       console.log('//new Data Fetcing');
       const fetchData = async () => {
-        // 기존의 게시판 글 불러오는 api 호출
-        console.log("게시판글 불러오는중");
-        const response = await api.boardPageWriteList(getBoard,String(offset),String(offset + 10)); // 게시판 페이지 게시글 목록 api
+        // 검색결과 글 불러오는 api 호출
+        console.log("검색결과 불러오는중");
+        const response = await api.writeSearch(props.query,String(offset),String(offset + 10)); // 게시판 페이지 게시글 목록 api
         setWrties(old => ([...old, ...response.data]));
         console.log('//new Data :',response.data);
         setOffset(old => old + 10) // offset을 계속 10씩 늘려주면 된다
@@ -54,14 +50,14 @@ const Write = (props) =>{
 
   return(
     <>
-    {writes && writes.map((item,index) => (
+    {writes && writes.map((item) => (
     <div className="write">
-    <Link key={index} to="/write" onClick={()=>onClickWrite(item.writeNum)}>
+    <Link to="/write" onClick={()=>onClickWrite(item.writeNum)}>
       <h2 className="wname">{item.writeName}</h2>
       <p className="wcontent">
-      {item.writeContents}</p>
+      {item.writeContent}</p>
       <time>{item.writeDate}</time>
-      <h3 className="nickname">{item.nickName}</h3>
+      <h3 className="nickname">{item.nickname}</h3>
       <ul className="status">
         <li className="good">
           <img src={goodIcon} alt="좋아요"/>
@@ -69,7 +65,7 @@ const Write = (props) =>{
         </li>
         <li className="comment">
           <img src={commentIcon} alt="댓글수"/>
-          <span>{item.countComment}</span>
+          <span>{item.countComments}</span>
         </li>
       </ul>
     </Link>
@@ -79,7 +75,5 @@ const Write = (props) =>{
           {!isFetching && <h1>더이상 조회할 게시글이 없습니다</h1>}
     </>
   );
-  
-  
 };
-export default Write;
+export default SearchWrite;

@@ -67,9 +67,116 @@ const api = {
   },
   pfImgChange: async function(pfImg) {
     const regCheck = {
-      pfImg : pfImg
+      pfImg : pfImg,
+      target : localStorage.getItem("memberNum")
     }
-    return await axios.post(BASE_URL + "", regCheck, HEADER);
+    return await axios.post(BASE_URL + "PfImgChangeServlet", regCheck, HEADER);
+  },
+  // 메인 화면 게시판 
+  boardDetail: async function() {
+    const boardObj = {
+      cmd : "BoardInfo"
+    }
+    return await axios.post(BASE_URL + "BoardServlet", boardObj, HEADER );
+  },
+  // 주간 인기글
+  hotBoardDetail: async function() {
+    const hotBoardObj = {
+      cmd: "HotBoardInfo"
+    }
+    return await axios.post(BASE_URL + "HotBoardServlet", hotBoardObj, HEADER);
+  },
+  // 최근 댓글 달린 게시글
+  newComBoardDetail: async function() {
+    const newComBoardObj = {
+        cmd : "NewComBoardInfo"
+    }
+    return await axios.post(BASE_URL + "NewComBoardServlet", newComBoardObj, HEADER);
+  },
+  // 게시판 페이지 게시판 이름
+  boardPageBoardName: async function(boardName) {
+    const boardNameObj = {
+      cmd : "BoardNameInfo",
+      boardName : boardName
+    }
+    return await axios.post(BASE_URL + "BoardPageNameServlet", boardNameObj, HEADER);
+  },
+  // 게시판 페이지 게시글 목록
+  boardPageWriteList : async function(boardName,offsetNum,limitNum) {
+    const writeListObj = {
+      cmd : "BoardPageWriteList",
+      boardName : boardName,
+      offsetNum,
+      limitNum
+    };
+    return await axios.post(BASE_URL + "BoardPageWriteListServlet", writeListObj, HEADER);
+  },
+  // 상세 게시글 조회
+  writeDetail : async function(writeNum) {
+    const writeDetailObj = {
+      cmd : "WriteDetailInfo",
+      writeNum : writeNum
+    };
+    return await axios.post(BASE_URL + "WriteDetailServlet", writeDetailObj, HEADER);
+  },
+  // 상세 게시글에 달린 댓글 조회
+  commentsWriteDetail : async function(writeNum) {
+    const commentsDataObj = {
+      cmd : "CommentsInfo",
+      writeNum : writeNum
+    };
+    return await axios.post(BASE_URL + "CommentsWriteDetailServlet", commentsDataObj, HEADER);
+  },
+  // 댓글 달기
+  addComments : async function(memberNum, commentContent, writeNum) {
+    const addCommentsObj = {
+      cmd : "CommentsAdd",
+      memberNum : memberNum,
+      commentContent : commentContent,
+      writeNum : writeNum
+    };
+    return await axios.post(BASE_URL + "AddCommentsServlet", addCommentsObj, HEADER);
+  },
+  // 댓글 삭제
+  deleteComments : async function(commentNum) {
+    const deleteComments = {
+      cmd : "CommentsDelete",
+      commentNum : commentNum
+    };
+    return await axios.post(BASE_URL + "DeleteCommentsServlet", deleteComments, HEADER);
+  },
+  // 좋아요 중복 확인
+  alreadyGood : async function(writeNum, memberNum) {
+    const alreadyGoodObj = {
+      cmd : "AlreadyGoodInfo",
+      writeNum : writeNum,
+      memberNum : memberNum
+    };
+    return await axios.post(BASE_URL + "AlreadyGoodServlet", alreadyGoodObj, HEADER);
+  },
+  // 좋아요 등록
+  addGood : async function(memberNum, writeNum) {
+    const addGoodObj = {
+      cmd : "GoodAdd",
+      memberNum :  memberNum,
+      writeNum : writeNum
+    };
+    return await axios.post(BASE_URL + "AddGoodServlet", addGoodObj, HEADER);
+  },
+  writeDelete : async function(writeNum) {
+    const regCheck = {
+      cmd : "WriteDelete",
+      writeNum : writeNum
+    }
+    return await axios.post(BASE_URL + "WriteDeleteServlet", regCheck, HEADER);
+  },
+  writeSearch : async function(query,offsetNum,limitNum) {
+    const writeListObj = {
+      query : query,
+      offsetNum,
+      limitNum
+    };
+    return await axios.post(BASE_URL + "WriteSearchServlet", writeListObj, HEADER);
   },
 };
 export default api;

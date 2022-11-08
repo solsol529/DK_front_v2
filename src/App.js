@@ -14,6 +14,7 @@ import UnReg2 from "./pages/UnReg2";
 import EmailChange from "./pages/EmailChange";
 import PwdChange from "./pages/PwdChange";
 import MyCommentPage from "./pages/MyCommentPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -35,6 +36,7 @@ function App() {
           <Route path='/EmailChange' element={<EmailChange/>}/>
           <Route path='/PwdChange' element={<PwdChange />} />
           <Route path='/MyCommentPage' element={<MyCommentPage />} />
+          <Route path="/search/:query" element={<SearchPage/>}/>
         </Routes>
         {/* <Footer/> */}
       </Router>

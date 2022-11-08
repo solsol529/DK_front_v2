@@ -1,44 +1,100 @@
+import React from 'react';
 import CommentList from "./CommentList";
 import writeProfileImg from "../resource/kriby_study2.png";
 import goodIcon from "../resource/kirby_icon6.png";
 import commentIcon from "../resource/kirby_icon7.png"
 import tomatoIcon from "../resource/kirby_icon6-1.png";
 import writeIcon from "../resource/kirby_icon8.png";
-const WriteDetail = () =>{
+import { useState, useEffect } from "react";
+import api from "../api/api";
+const WriteDetail = (props) =>{
+  const getWriteNum = window.localStorage.getItem("Detail");
+  const getMemberNum = window.localStorage.getItem("memberNum");
+  const [writeDetail, setWriteDetail] = useState('');
+  const [countGood, setCountGood] = useState('');
+
+  const [isChange, setIsChange] = useState(false);
+  const [isGoodChange, setIsGoodChange] = useState(false);
+
+  const onClickGood = async () => {
+    try {
+      const response = await api.alreadyGood(getMemberNum, getWriteNum);
+      if(response.data.cnt === 1) alert("이미 좋아요를 누른 게시글입니다.");
+      else if(response.data.cnt === 0) 
+      {
+        await api.addGood(getWriteNum, getMemberNum);
+        setIsGoodChange(!isGoodChange);
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+  const writeDelete = async () => {
+    try {
+      await api.writeDelete(getWriteNum);
+      alert("게시글이 성공적으로 삭제되었습니다!")
+      window.location.replace("/board");
+    } catch(e) {
+      console.log(e);
+    }
+  };
+
+
+  useEffect(() => {
+    const writeData = async () => {
+      try {
+        const response = await api.writeDetail(getWriteNum);
+        setWriteDetail(response.data);
+        console.log(38);
+        console.log(response.data);
+        console.log(response.data[0].boardName);
+        localStorage.setItem("Board", response.data[0].boardName);
+        props.changeIsChange(!(props.isChange));
+      } catch(e)  {
+        console.log(e);
+      }
+    };
+    writeData();
+  },[isGoodChange]);
+  
   return(
     <div className="writedetail">
-      <div className="wname">
-        <p>귀여운 커비</p>
+      {writeDetail && writeDetail.map(write => (
+        <>
+        <div className="wname"> 
+        <p>{write.writeName}</p>
         <div className="writeprofile">
-          <img src={writeProfileImg} alt="게시글 프로필 이미지"/>
-          <time>방금</time>
-          <h3 className="nickname">와들디</h3>
-          <span className="writedelete">삭제</span>
+          {write.pfImg? <img className="writePfImg" src={write.pfImg} alt="댓글 프로필 이미지"/>:
+          <img className="writePfImg" src={writeProfileImg} alt="게시글 기본 프로필 이미지"/>}
+          <time>{write.writeDate}</time>
+          <h3 className="nickname">{write.nickname}</h3>
+          {write.nickname == localStorage.getItem("userNickname") && 
+          <span className="writedelete" onClick={()=>{
+            writeDelete()}}>삭제</span>}
         </div>
       </div>
-      <p className="wcontent">
-        봄바람과 함께 푸푸푸랜드에 찾아온 모험의 용사<br/>
-        적을 빨아들이고 능력을 카피해, 변신하기도!<br/>
-        무기를 휘두르고, 신기한 기술도 사용하고, 때로는 모습을 바꿔 활약!!</p>
+      <p className="wcontent" >
+        {write.writeContent}
+        </p>
       <ul className="status">
         <li className="good">
           <img src={goodIcon} alt="좋아요"/>
-          <span>0</span>
+          <span>{write.countGood}</span>
         </li>
         <li className="comment">
           <img src={commentIcon} alt="댓글"/>
-          <span>0</span>
+          <span>{write.countComments}</span>
         </li>
       </ul>
-      <button className="goodbtn">
+      <button className="goodbtn" onClick={onClickGood}>
         <img src={tomatoIcon} alt="맥시멈토마토"/>
-        <p>0</p>
+        <p>{write.countGood}</p>
       </button>
+        </>
+        
+      ))}
       <CommentList/>
-      <form action="#" className="writecomment">
-        <input type="text" name="commentinput" className="commentinput"/>
-        <button><img src={writeIcon} alt="글쓰기아이콘"/></button>
-      </form>
     </div>
   );
 };
