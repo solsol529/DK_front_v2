@@ -27,8 +27,8 @@ const PwdChange = () => {
         try {
             const res = await api.userLogin(getNickname, inputPwd1);
             console.log(res.data);
-           
             if(res.data.result === "OK") {
+                console.log("비밀번호 체크중");
                 onClickPwdUpdate2();
             } else {
             }           
@@ -90,7 +90,6 @@ const PwdChange = () => {
             setIsConPw(true);
         }      
     }
-
 
     return (
         <div className="pwdchange_container_first">
