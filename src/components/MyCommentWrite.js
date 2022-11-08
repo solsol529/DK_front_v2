@@ -22,6 +22,7 @@ const MyCommentWrite = () =>{
   const writeItems = async () => {
     try {
       if(isMax){
+        setIsFetching(false);
         console.log('//max Data');
         return;
       }
@@ -53,8 +54,9 @@ const MyCommentWrite = () =>{
 
 
   return(
-    <div className="write">
+      <>
       {writes && writes.map((item,index) => (
+      <div className="write">
       <Link key={index} to="/write" onClick={()=>onClickWrite(item.writeNum)}>
         <h2 className="wname">{item.writeName}</h2>
         <p className="wcontent">
@@ -72,12 +74,11 @@ const MyCommentWrite = () =>{
           </li>
         </ul>
       </Link>
+      </div>
       ))}
       {isFetching && <h1>New Data Fetcing .......</h1>}
-
-     
-      
-    </div>
+      {!isFetching && <h1>더이상 조회할 게시글이 없습니다</h1>}
+      </>
   );
 };
 export default MyCommentWrite;

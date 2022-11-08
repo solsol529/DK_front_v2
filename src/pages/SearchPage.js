@@ -24,7 +24,7 @@ const SearchPage = () =>{
       <div className="boardmain">
         <div className="boardcenter">
           <div className="board-name">
-            <Link className="bname" to="#">{query}의 검색결과</Link>
+            <Link className="bname" to="#">'{query}'의 검색결과</Link>
           </div>
           {/* <NewWrite/> */}
           {/* <BoardName name={query+"의 검색결과"}/> */}
