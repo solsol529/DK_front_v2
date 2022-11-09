@@ -214,3 +214,15 @@ input[type=checkbox]{
   background-color: rgba(255, 255, 255, 0.7);
   color: rgba(0, 0, 0, 0.7);
 }
+
+.termbox{
+  margin: 10px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 60vw;
+  box-sizing: border-box;
+  border-radius: 20px;
+  p{
+    padding: 5px;
+  }
+}
