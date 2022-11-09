@@ -39,7 +39,6 @@ const MemberInfoMyWrite = () =>{
             </div>
             <div className="profileinfo">
               <div key={member.nickname}>
-                  <p>회원번호 : {member.member_num}</p>
                   <p>닉네임 : {member.nickname}</p>
                   <p>가입일 : {member.regDate}</p>
                   <p>전화번호 : {member.phone}</p>
