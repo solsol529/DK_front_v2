@@ -66,6 +66,7 @@ const ChangeMemberInfo = (props) =>{
         setChangeProfileImg(false);
         props.changeIsChange(++cnt);
         // window.location.replace("/memberinfo");
+        setImageUrl("");
       } else {
 
       }
