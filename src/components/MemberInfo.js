@@ -11,6 +11,7 @@ import ChangeMemberInfo from "./ChangeMemberInfo";
 import MyWrite from "./MyWrite";
 import api from "../api/api";
 import UnReg from "./UnReg";
+import { logout } from "../util/common";
 
 const MemberInfo = () =>{
   const [memberInfo, setMemberInfo] = useState('');
@@ -72,7 +73,7 @@ const MemberInfo = () =>{
             </div>
             </>
           ))}
-          <Link to="/login" className="logout">로그아웃</Link>
+          <Link to="#" onClick={logout} className="logout">로그아웃</Link>
         </div>
       </div>
       <div className="memberinfocenter">

@@ -10,6 +10,7 @@ import BoardName from "./BoardName";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import MyWriteList from "./MyWriteList";
+import { logout } from "../util/common";
 
 const MemberInfoMyWrite = () =>{
   const [memberInfo, setMemberInfo] = useState('');
@@ -52,7 +53,7 @@ const MemberInfoMyWrite = () =>{
             </div>
             </>
           ))}
-          <Link to="/login" className="logout">로그아웃</Link>
+          <Link to="#" onClick={logout} className="logout">로그아웃</Link>
         </div>
       </div>
       <div className="memberinfocenter">
