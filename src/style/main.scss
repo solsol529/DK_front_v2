@@ -140,6 +140,21 @@ a{
   background-color: rgba(255, 255, 255, 0.3);
   height: fit-content;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .banner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+    img{
+      width: 100%;
+      border-radius: 10px;
+    }
+  }
 }
 
 .maincenter{
@@ -410,4 +425,5 @@ a{
   .mainright{
     grid-area: right;
   }
+
 }

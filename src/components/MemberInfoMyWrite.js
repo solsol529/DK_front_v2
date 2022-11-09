@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import "../style/member.scss"
 import defaultProfileImg from "../resource/kriby_study2.png";
 import rankIcon1 from "../resource/kirby_icon1.png";
-import Write from "./Write";
 import BoardName from "./BoardName";
 import { useState, useEffect } from "react";
 import api from "../api/api";
+import MyWriteList from "./MyWriteList";
 
 const MemberInfoMyWrite = () =>{
   const [memberInfo, setMemberInfo] = useState('');
@@ -48,7 +48,7 @@ const MemberInfoMyWrite = () =>{
       <div className="memberinfocenter">
         <BoardName name="내가 작성한 글" notlink={true}/>
         <div className="mywriteview">
-          <Write/>
+          <MyWriteList/>
         </div>
       </div>
     </div>

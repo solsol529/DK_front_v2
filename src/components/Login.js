@@ -48,7 +48,8 @@ const Login = () =>{
         window.localStorage.setItem("userNickname", inputNickname);
         window.location.replace("/main");
       } else {
-
+        setIsPwd(false);
+        setPwdMsg("닉네임 또는 비밀번호를 확인해주세요");
       }
     } catch (e) {
       console.log("로그인 에러..");

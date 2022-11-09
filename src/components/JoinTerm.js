@@ -44,24 +44,24 @@ const JoinTerm = () =>{
         <div action="#" className="joinform">
           <p className="termchkall">
             <span>
+              <label>
             <input type='checkbox' name='select-all'
                     onChange={(e) => handleAllCheck(e.target.checked)}
                     // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
                     checked={checkItems.length === 3 ? true : false} />
-              <label htmlFor="chkall">
                 <span className="chkalltxt">개발하는 커비 이용약관, 개인정보 수집 및 이용, 프로모션 정보 수신(선택)에 모두 동의합니다</span>
               </label>
               </span>
           </p>
           <p className="termchk1">
             <span>
+              <label>
               <input type='checkbox' 
               name="chk1"
               onChange={(e) => handleSingleCheck(e.target.checked, "chk1")}
               // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
               checked={checkItems.includes("chk1") ? true : false} 
               />
-              <label htmlFor="chk1">
                 <span className="chk1txt">개발하는 커비 이용약관 동의<span>(필수)</span></span>
               </label>
             </span>
@@ -150,13 +150,13 @@ const JoinTerm = () =>{
           </div>
           <p className="termchk2">
             <span>
+              <label>
               <input type='checkbox' 
                 name="chk2"
                 onChange={(e) => handleSingleCheck(e.target.checked, "chk2")}
                 // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
                 checked={checkItems.includes("chk2") ? true : false} 
               />
-              <label htmlFor="chk2">
                 <span className="chk2txt">개인정보 수집 및 이용 동의<span>(필수)</span></span>
               </label>
             </span>
@@ -282,13 +282,13 @@ const JoinTerm = () =>{
           </div>
           <p className="termchk3">
             <span>
+              <label>
             <input type='checkbox' 
               name="chk3"
               onChange={(e) => handleSingleCheck(e.target.checked, "chk3")}
               // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
               checked={checkItems.includes("chk3") ? true : false} 
               />
-              <label htmlFor="chk3">
                 <span className="chk3txt">프로모션 정보 수신 동의<span>(선택)</span></span>
               </label>
             </span>

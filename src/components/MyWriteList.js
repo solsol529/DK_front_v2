@@ -5,11 +5,10 @@ import { useState, useEffect } from "react";
 import api from "../api/api";
 import useInfiniteScroll from "./hooks/useInfiniteScroll";
 
-const Write = () =>{
+const MyWriteList = () =>{
 
   const getNickname = window.localStorage.getItem("userNickname");
   const memberNum = window.localStorage.getItem("memberNum");
-  console.log("로컬스토리지 값 " + memberNum)
   const [writes, setWrties] = useState('');
   const [offset, setOffset] = useState(0);
   const [isMax, setIsMax] = useState(false);
@@ -27,8 +26,6 @@ const Write = () =>{
       }
       console.log('//new Data Fetcing');
       const fetchData = async () => {
-        // 검색결과 글 불러오는 api 호출
-        console.log("검색결과 불러오는중");
         const response = await api.myWriteList(String(memberNum),String(offset),String(offset + 10));
         setWrties(old => ([...old, ...response.data]));
         console.log('//new Data :',response.data);
@@ -54,10 +51,10 @@ const Write = () =>{
 
 
   return(
-    <div className="write">
+    <>
 
 {writes && writes.map((item,index) => (
-
+  <div className="write">
 <Link key={index} to="/write" onClick={()=>onClickWrite(item.writeNum)}>
   <h2 className="wname">{item.writeName}</h2>
   <p className="wcontent">
@@ -75,10 +72,12 @@ const Write = () =>{
     </li>
   </ul>
 </Link>
+</div>
       ))}
       {isFetching && <h1>New Data Fetcing .......</h1>} 
       {!isFetching && <h1>더이상 조회할 게시글이 없습니다</h1>}
-    </div>
+      </>  
   );
 };
-export default Write;
+
+export default MyWriteList;

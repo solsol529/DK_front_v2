@@ -68,7 +68,7 @@ const Comment = ()=>{
           ))}
 
     <div className="writecomment">
-        <input type="text" name="commentinput" className="commentinput" onChange={handleChange}/>
+        <input type="text" name="commentinput" value={comment} className="commentinput" onChange={handleChange}/>
         <button onClick={() =>{
           onClickComment();
         }}><img src={writeIcon} alt="글쓰기아이콘"/></button>
