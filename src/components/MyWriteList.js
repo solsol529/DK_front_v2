@@ -21,6 +21,7 @@ const MyWriteList = () =>{
   const writeItems = async () => {
     try {
       if(isMax){
+        setIsFetching(false);
         console.log('//max Data');
         return;
       }

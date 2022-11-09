@@ -12,7 +12,6 @@ import api from "../api/api";
 const ProfileCard = ()=>{
 
   const [lists, setLists] = useState('');
-
   useEffect(() => {
     const fetchData = async () => {
       try {
