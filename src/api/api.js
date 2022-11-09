@@ -1,7 +1,7 @@
 import axios from "axios";
 const HEADER = 'application/json';
 // const HEADER = {"Content-type" : "application/json; charset-UTF-8"};
-const BASE_URL = "http://172.30.1.70:8090/developerKirby/";
+const BASE_URL = "http://localhost:8090/developerKirby/";
 
 const api = {
   userLogin: async function(nickname, pwd) {
