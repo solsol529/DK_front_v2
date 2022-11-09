@@ -10,7 +10,7 @@ const PwdChange = () => {
     const [inputPwd2, setInputPwd2] = useState('');
     const [inputPwd3, setInputPwd3] = useState('');
     const getNickname = window.localStorage.getItem("userNickname");
-    const getPwd =  window.localStorage.getItem("userPwd");
+    const getPwd = window.localStorage.getItem("userPwd");
 
     //오류메시지
     const [pwMessage, setPwMessage] = useState("");
@@ -27,8 +27,8 @@ const PwdChange = () => {
         try {
             const res = await api.userLogin(getNickname, inputPwd1);
             console.log(res.data);
+           
             if(res.data.result === "OK") {
-                console.log("비밀번호 체크중");
                 onClickPwdUpdate2();
             } else {
             }           
@@ -36,6 +36,25 @@ const PwdChange = () => {
             console.log("로그인 에러..");
         }
     }
+
+
+    // //현재 비밀번호 맞는지 ck
+    // const onChangepwd1 = (e) => {
+    //     const passwordCurrent = e.target.value;
+    //     setInputPwd1(passwordCurrent)
+    //     if (passwordCurrent !== getPwd) {
+    //         setConPwMessage('비밀 번호가 일치하지 않습니다.')
+    //         setIsConPw(false)
+    //     } else {
+    //         setConPwMessage('비밀 번호가 일치 합니다.')
+    //         setIsConPw(true);
+    //     }      
+    // }
+
+    const onChangepwd1 = (e) => {
+        setInputPwd1(e.target.value)
+      }
+
     //새 비밀번호 변경
     const onClickPwdUpdate2 = async() => {
         try {
@@ -51,6 +70,7 @@ const PwdChange = () => {
             console.log("비밀번호 변경 에러...!");
         }
     }
+
     //새 비밀번호 유효성 ck
     const onChangepwd2 = (e) => {
         //const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
@@ -78,18 +98,6 @@ const PwdChange = () => {
             setIsConPw(true);
         }      
     }
-    //현재 비밀번호 맞는지 ck
-    const onChangepwd1 = (e) => {
-        const passwordCurrent = e.target.value;
-        setInputPwd1(passwordCurrent)
-        if (passwordCurrent !== getPwd) {
-            setConPwMessage('비밀 번호가 일치하지 않습니다.')
-            setIsConPw(false)
-        } else {
-            setConPwMessage('비밀 번호가 일치 합니다.')
-            setIsConPw(true);
-        }      
-    }
 
     return (
         <div className="pwdchange_container_first">
@@ -98,10 +106,10 @@ const PwdChange = () => {
             <p className="pwd_current">현재 비밀번호
             <input type="password" value={inputPwd1} className="pwd_change_input" onChange={onChangepwd1}></input>
             </p>
-            <div className="current_pwd_hint">
+            {/* <div className="current_pwd_hint">
             {inputPwd1.length > 0 && (
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage}</span>)}
-            </div>
+            </div> */}
             <p className="pwd_change_ck">새 비밀번호
             <input type="password" value={inputPwd2} className="pwd_change_input" onChange={onChangepwd2}></input>
             </p>
