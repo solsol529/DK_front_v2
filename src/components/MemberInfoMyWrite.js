@@ -10,6 +10,7 @@ import BoardName from "./BoardName";
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import MyWriteList from "./MyWriteList";
+import { logout } from "../util/common";
 
 const MemberInfoMyWrite = () =>{
   const [memberInfo, setMemberInfo] = useState('');
@@ -39,7 +40,6 @@ const MemberInfoMyWrite = () =>{
             </div>
             <div className="profileinfo">
               <div key={member.nickname}>
-                  <p>회원번호 : {member.member_num}</p>
                   <p>닉네임 : {member.nickname}</p>
                   <p>가입일 : {member.regDate}</p>
                   <p>전화번호 : {member.phone}</p>
@@ -53,7 +53,7 @@ const MemberInfoMyWrite = () =>{
             </div>
             </>
           ))}
-          <Link to="/login" className="logout">로그아웃</Link>
+          <Link to="#" onClick={logout} className="logout">로그아웃</Link>
         </div>
       </div>
       <div className="memberinfocenter">
